@@ -7,9 +7,9 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex.svg)
 
 ## About
-KlassIndex is the younger Kotlin brother of [atteo/classindex](https://github.com/atteo/classindex). However, it differs from ClassIndex in various aspects.
+**K**lassIndex is the younger Kotlin brother of [atteo/classindex](https://github.com/atteo/classindex). However, it differs from ClassIndex in various aspects.
 
-| Aspects | ClassIndex | KlassIndex |
+| Aspects | ClassIndex | **K**lassIndex |
 |------------------------|----------------------------------------------------|-----------------------------------------|
 | Language | Java | Kotlin |
 | Supported Classes | Any Java class | `Any` Kotlin class |
@@ -30,19 +30,19 @@ KlassIndex is the younger Kotlin brother of [atteo/classindex](https://github.co
 
 ### Explanation
 
-1. ClassIndex stores the qualified names of the classes to load at run time in the jar's resources. The resource parsing and class loading comes with a cost. In contrast, KlassIndex statically compiles the references. That means resource and classloading are not necessary. Excluded, however, are use cases where you have tons of classes and want only to load few of them, ClassIndex might show a better performance.
+1. ClassIndex stores the qualified names of the classes to load at run time in the jar's resources. The resource parsing and class loading comes with a cost. In contrast, **K**lassIndex statically compiles the references. That means resource and classloading are not necessary. Excluded, however, are use cases where you have tons of classes and want only to load few of them, ClassIndex might show a better performance.
 
-2. ClassIndex depends on resource and class loading. In use cases in Android where no context is available or a different class loader is to be used, ClassIndex will fail. KlassIndex compiles the references statically to enable full support.
+2. ClassIndex depends on resource and class loading. In use cases in Android where no context is available or a different class loader is to be used, ClassIndex will fail. **K**lassIndex compiles the references statically to enable full support.
 
 3. New IntelliJ and Android Studio versions require newer versions of Gradle to provide full support.
 
-4. KlassIndex provides all functional methods from Kotlin's `Iterable`, not just filters.
+4. **K**lassIndex provides all functional methods from Kotlin's `Iterable`, not just filters.
 
-5. ClassIndex uses workarounds to detect if classes are valid and still existent. KlassIndex, however uses statically compiled generated classes so that the compiler can check the validity.
+5. ClassIndex uses workarounds to detect if classes are valid and still existent. **K**lassIndex, however uses statically compiled generated classes so that the compiler can check the validity.
 
 6. Kotlin does not (yet?) have such a concept such as Java's package files. Thus, package indexing has been removed to be consistent with the Kotlin.
 
-7. ClassIndex does not provide separate dependency modules for annotation processing and compilation as required by newer Gradle versions (i.e., deprecated in Gradle 4.x, to be dropped in Gradle 5.x). KlassIndex provides a spearate annotation processor to be used with Gradle's `kotlin-kapt`.
+7. ClassIndex does not provide separate dependency modules for annotation processing and compilation as required by newer Gradle versions (i.e., deprecated in Gradle 4.x, to be dropped in Gradle 5.x). **K**lassIndex provides a spearate annotation processor to be used with Gradle's `kotlin-kapt`.
 
 8. The only use case in which a service loader is to be preferred over statical compilation are plugin-based systems.
 
@@ -52,7 +52,7 @@ KlassIndex is the younger Kotlin brother of [atteo/classindex](https://github.co
 - the list of classes implementing a given interface getSubclasses()
 
 ### Advantages
-KlassIndex
+**K**lassIndex
 - is faster than reading a file, it is not impacted by the usual performance penalty of the classpath scanning
 - is not depending on a class loader
 - is leight-weight and simple
@@ -143,12 +143,12 @@ For more examples, check the [test file](https://github.com/matfax/klassindex/bl
 
 ### Annotation Index Processor
 
-KlassIndex indexes your classes at compile time by providing the implementation of the standard [annotation 
+**K**lassIndex indexes your classes at compile time by providing the implementation of the standard [annotation 
 processor](http://www.jcp.org/en/jsr/detail?id=269). The index is then used by kapt utilizing kotlinpoet to generate new Kotlin source files that hold the static references to the indexed classes. The compiler uses the source files as if they were manually written.
 
 ### Run Time Library
 
-KlassIndex provides a library to load the statically compiled index from the generated classes and to process them.
+**K**lassIndex provides a library to load the statically compiled index from the generated classes and to process them.
 
 ## Why KlassIndex?
 
@@ -168,6 +168,6 @@ Here are the results of the [benchmark](https://github.com/atteo/classindex-benc
 | Reflections Maven plugin | 0:00.52 |
 | [Corn](https://sites.google.com/site/javacornproject/corn-cps) | 0:24.60 |
 | ClassIndex | 0:00.18 |
-| KlassIndex | TBD |
+| **K**lassIndex | TBD |
 
 Notes: benchmark was performed on Intel i5-2520M CPU @ 2.50GHz, classpath size was set to 121MB.

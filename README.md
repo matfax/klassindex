@@ -247,45 +247,6 @@ classpath with the full class name of your processor, see the example [here](htt
 Important note: you also need to ensure that your custom processor is always available on the classpath when 
 compiling indexed classes. When that is not the case there will not be any error - those classes will be missing in the index.
 
-## Making shaded jar
-During compilation ClassIndex writes index files. When creating a shaded jar those index files get overwritten by default. To not lost any indexed classes ClassIndex provides special transformer for Maven which merges the index files instead of overwriting them. To use it add the configuration below to your POM file:
-
-```xml
-<build>
-    <plugins>
-        <plugin>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>@maven-shade-plugin.version@</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <transformers>
-                            <transformer implementation="org.atteo.classindex.ClassIndexTransformer"/>
-                        </transformers>
-                    </configuration>
-                </execution>
-            </executions>
-            <dependencies>
-                <dependency>
-                    <groupId>org.atteo.classindex</groupId>
-                    <artifactId>classindex-transformer</artifactId>
-                    <version>@class index version@</version>
-                </dependency>
-            </dependencies>
-        </plugin>
-    </plugins>
-</build>
-```
-
-## Eclipse
-Eclipse uses its own Java compiler which is not strictly standard compliant and requires extra configuration.
-In Java Compiler -> Annotation Processing -> Factory Path you need to add ClassIndex jar file.
-See the [screenshot](https://github.com/atteo/classindex/issues/5#issuecomment-15365420).
-
 ## License
 
 ClassIndex is available under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).

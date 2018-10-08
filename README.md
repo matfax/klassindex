@@ -7,6 +7,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex.svg)
 
 ## About
+
 **K**lassIndex is the younger Kotlin brother of [atteo/classindex](https://github.com/atteo/classindex). However, it differs from ClassIndex in various aspects.
 
 | Aspects | ClassIndex | **K**lassIndex |
@@ -48,22 +49,24 @@
 
 ### Methods
 
--the list of classes annotated by a given annotation getAnnotated()
--the list of classes implementing a given interface getSubclasses()
+*the list of classes annotated by a given annotation getAnnotated()
+*the list of classes implementing a given interface getSubclasses()
 
 ### Advantages
+
 **K**lassIndex
--is faster than reading a file, it is not impacted by the usual performance penalty of the classpath scanning
--is not depending on a class loader
--is leight-weight and simple
--supports incremental compilation in IntelliJ and Android Studio
+*is faster than reading a file, it is not impacted by the usual performance penalty of the classpath scanning
+*is not depending on a class loader
+*is leight-weight and simple
+*supports incremental compilation in IntelliJ and Android Studio
 
 ## How to use it?
 
 ### Add Dependency
+
 #### Gradle
 
--Add repository
+*Add repository
 ```groovy
 allprojects {
 	repositories {
@@ -71,7 +74,7 @@ allprojects {
 	}
 }
 ```
--Add dependencies
+*Add dependencies
 ```groovy
 compile 'com.github.matfax.klassindex:library:4.+'
 kapt 'com.github.matfax.klassindex:processor:4.+'
@@ -79,7 +82,7 @@ kapt 'com.github.matfax.klassindex:processor:4.+'
 
 #### Gradle in Kotlin DSL
 
--Add repository
+*Add repository
 ```kotlin
 allprojects {
     repositories {
@@ -87,13 +90,14 @@ allprojects {
 	}
 }
 ```
--Add dependencies
+*Add dependencies
 ```kotlin
 compile("com.github.matfax.klassindex:library:4.+")
 kapt("com.github.matfax.klassindex:processor:4.+")
 ```
 
 #### Others
+
 For others, check: [Jitpack](https://jitpack.io/#matfax/klassindex)
 
 ### Annotations

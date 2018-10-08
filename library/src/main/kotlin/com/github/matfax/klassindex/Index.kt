@@ -17,13 +17,17 @@
 
 package com.github.matfax.klassindex
 
+import kotlin.reflect.KClass
+
 interface Index {
 
-    fun index(): Map<String, Set<String>>
+    fun index(): Map<KClass<*>, Set<KClass<*>>>
 
     companion object {
         fun load(className: String): Index {
-            return Class.forName("${this::class.java.`package`.name}.$className").kotlin.objectInstance as Index
+            return Class.forName(
+                    "${this::class.java.`package`.name}.$className"
+            ).kotlin.objectInstance as Index
         }
     }
 

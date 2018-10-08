@@ -22,7 +22,7 @@ import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
 import kotlin.reflect.full.companionObjectInstance
 
-inline class KlassSubIndex<T : Any>(private val classes: List<KClass<out T>>) : Iterable<KClass<out T>> {
+inline class KlassSubIndex<T : Any>(private val classes: Set<KClass<out T>>) : Iterable<KClass<out T>> {
     override fun iterator(): Iterator<KClass<out T>> {
         return classes.iterator()
     }
@@ -85,7 +85,6 @@ inline class KlassSubIndex<T : Any>(private val classes: List<KClass<out T>>) : 
         return this.map { it.objectInstance }.filterNotNull()
     }
 
-
     fun nested(): KlassSubIndex<*> {
         return this.flatMap { it.nestedClasses }.toIndex()
     }
@@ -98,8 +97,19 @@ inline class KlassSubIndex<T : Any>(private val classes: List<KClass<out T>>) : 
         return this.map { it.companionObjectInstance }.filterNotNull()
     }
 
+    fun qualifiedNames(): List<String> {
+        return this.map { it.qualifiedName }.filterNotNull()
+    }
+
+    fun simpleNames(): List<String> {
+        return this.map { it.simpleName }.filterNotNull()
+    }
 }
 
-inline fun <T : Any> List<KClass<out T>>.toIndex(): KlassSubIndex<T> {
+fun <T : Any> List<KClass<out T>>.toIndex(): KlassSubIndex<T> {
+    return KlassSubIndex(this.toSet())
+}
+
+fun <T : Any> Set<KClass<out T>>.toIndex(): KlassSubIndex<T> {
     return KlassSubIndex(this)
 }

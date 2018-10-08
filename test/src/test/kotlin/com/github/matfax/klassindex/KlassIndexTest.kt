@@ -25,22 +25,13 @@ import org.junit.jupiter.api.Test
 class KlassIndexTest {
     @Test
     fun shouldIndexSubclasses() {
-        val services = KlassIndex.getSubclasses(Service::class).toList()
-        assert(services).containsOnly(SecondService::class, InnerClasses.InnerService::class)
-    }
-
-    @Test
-    fun shouldReturnNamesOfSubclasses() {
-        val services = KlassIndex.getSubclassesNames(Service::class).toList()
-        assert(services).containsOnly(
-                SecondService::class.java.canonicalName,
-                "${InnerClasses::class.java.canonicalName}$${InnerClasses.InnerService::class.simpleName}"
-        )
+        val superclass = KlassIndex.getSubclasses(Service::class).toList()
+        assert(superclass).containsOnly(SecondService::class, InnerClasses.InnerService::class)
     }
 
     @Test
     fun shouldIndexAnnotated() {
-        val annotated = KlassIndex.getAnnotated<Any>(Component::class).toList()
+        val annotated = KlassIndex.getAnnotated(Component::class).toList()
         assert(annotated).containsOnly(
                 SecondComponent::class,
                 InnerClasses.InnerComponent::class,
@@ -49,18 +40,8 @@ class KlassIndexTest {
     }
 
     @Test
-    fun shouldReturnNamesOfAnnotated() {
-        val annotated = KlassIndex.getAnnotatedNames(Component::class).toList()
-        assert(annotated).containsOnly(
-                SecondComponent::class.java.canonicalName,
-                "${InnerClasses::class.java.canonicalName}$${InnerClasses.InnerComponent::class.simpleName}",
-                "${InnerClasses::class.java.canonicalName}$${InnerClasses.InnerComponent::class.simpleName}$${InnerClasses.InnerComponent.InnerInnerComponent::class.simpleName}"
-        )
-    }
-
-    @Test
     fun shouldIndexWhenAnnotationIsInherited() {
-        val annotated = KlassIndex.getAnnotated<Any>(InheritedAnnotation::class).toList()
+        val annotated = KlassIndex.getAnnotated(InheritedAnnotation::class).toList()
         assert(annotated).containsOnly(
                 Service::class,
                 SecondService::class,
@@ -69,8 +50,33 @@ class KlassIndexTest {
     }
 
     @Test
-    fun shouldNotIndexNotAnnotated() {
-        val annotated = KlassIndex.getAnnotated<Any>(MeaninglessAnnotation::class).toList()
+    fun shouldNotIndexNotAnnotatedAnnotation() {
+        val annotated = KlassIndex.getAnnotated(MeaninglessAnnotation::class).toList()
         assert(annotated).isEmpty()
+    }
+
+    @Test
+    fun shouldNotIndexNotAnnotatedSuperclass() {
+        val superclass = KlassIndex.getSubclasses(SecondComponent::class).toList()
+        assert(superclass).isEmpty()
+    }
+
+    @Test
+    fun shouldReturnNamesOfAnnotated() {
+        val annotated = KlassIndex.getAnnotated(Component::class).qualifiedNames().toList()
+        assert(annotated).containsOnly(
+                SecondComponent::class.qualifiedName,
+                InnerClasses.InnerComponent::class.qualifiedName,
+                InnerClasses.InnerComponent.InnerInnerComponent::class.qualifiedName
+        )
+    }
+
+    @Test
+    fun shouldReturnNamesOfSubclasses() {
+        val services = KlassIndex.getSubclasses(Service::class).qualifiedNames().toList()
+        assert(services).containsOnly(
+                SecondService::class.java.canonicalName,
+                InnerClasses.InnerService::class.qualifiedName
+        )
     }
 }

@@ -17,23 +17,10 @@
 
 package com.github.matfax.klassindex
 
-import java.util.*
-import javax.xml.bind.JAXBContext
-
 /**
  * Index all subclasses of the annotated class or package.
  *
- * During compilation, ClassIndexProcessor creates a resource files listing all classes
- * extending annotated class or located inside annotated package.
- *
- * You can retrieve the list at runtime using either [KlassIndex.getSubclasses]
- * or [KlassIndex.getPackageClasses].
- *
- * For subclasses of the annotated class the resource file name is compatible with
- * what [ServiceLoader] expects. So if all the subclasses have a zero-argument constructor
- * you can use [ServiceLoader]. For subclasses of given package index file is named
- * "jaxb.index", it is located inside the package folder and it's format is compatible with
- * what [JAXBContext.newInstance] expects.
+ * You can retrieve the list at runtime using [KlassIndex.getSubclasses].
  */
 @MustBeDocumented
 @Retention

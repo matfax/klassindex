@@ -17,16 +17,10 @@
 
 package com.github.matfax.klassindex
 
-import java.util.*
-
 /**
  * Index all classes annotated by annotation annotated by this meta-annotation.
  *
- * During compilation, ClassIndexProcessor creates a resource file listing all classes
- * annotated by this meta-annotation.
- *
  * You can retrieve the list at runtime using [KlassIndex.getAnnotated].
- * If the classes also have a zero-argument constructor you can use [ServiceLoader] facility.
  */
 @MustBeDocumented
 @Retention

@@ -131,4 +131,16 @@ class KlassSubIndexTest {
         val result = list.nested().toList()
         assert(result).contains(InnerClasses.InnerComponent.InnerInnerComponent::class)
     }
+
+    @Test
+    fun shouldReturnNames() {
+        val result = list.simpleNames().toList()
+        assert(result).containsOnly(
+                "SecondComponent",
+                "InnerComponent",
+                "InnerInnerComponent",
+                "InnerModule",
+                "Service"
+        )
+    }
 }

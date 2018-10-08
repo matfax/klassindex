@@ -24,9 +24,6 @@ import kotlin.reflect.KClass
  *
  * Use &#064;[IndexAnnotated] and &#064;[IndexSubclasses] annotations to force the classes to be indexed.
  *
- * Keep in mind that the class is indexed only when it is compiled with
- * classindex.jar file in classpath.
- *
  */
 object KlassIndex {
 
@@ -39,78 +36,24 @@ object KlassIndex {
     /**
      * Retrieves a list of subclasses of the given class.
      *
-     * The class must be annotated with [IndexSubclasses] for it's subclasses to be indexed
-     * at compile-time by ClassIndexProcessor.
+     * The class must be annotated with [IndexSubclasses] for it's subclasses to be indexed at compile-time.
      *
      * @param superClass class to find subclasses for
-     * @param classLoader classloader for loading classes
      * @return sequence of subclasses
      */
-    fun <T : Any> getSubclasses(superClass: KClass<T>, classLoader: ClassLoader = Thread.currentThread().contextClassLoader): KlassSubIndex<T> {
-        val entries = getSubclassesNames(superClass)
-        return findClasses<T>(classLoader, entries).filter { superClass.java.isAssignableFrom(it.java) }
-    }
-
-    /**
-     * Retrieves names of subclasses of the given class.
-     *
-     * The class must be annotated with [IndexSubclasses] for it's subclasses to be indexed
-     * at compile-time by ClassIndexProcessor.
-     *
-     * @param superClass class to find subclasses for
-     * @return names of subclasses
-     */
-    fun <T : Any> getSubclassesNames(superClass: KClass<T>): Set<String> {
-        return subclassIndex[superClass.java.canonicalName].orEmpty()
+    fun <T : Any> getSubclasses(superClass: KClass<T>): KlassSubIndex<T> {
+        return subclassIndex[superClass].orEmpty().filterIsInstance<KClass<T>>().toIndex()
     }
 
     /**
      * Retrieves a list of classes annotated by given annotation.
      *
-     * The annotation must be annotated with [IndexAnnotated] for annotated classes
-     * to be indexed at compile-time by ClassIndexProcessor.
+     * The annotation must be annotated with [IndexAnnotated] for annotated classes to be indexed at compile-time.
      *
      * @param annotation annotation to search class for
-     * @param classLoader classloader for loading classes
      * @return list of annotated classes
      */
-    @JvmOverloads
-    fun <T : Any> getAnnotated(
-            annotation: KClass<out Annotation>,
-            classLoader: ClassLoader = Thread.currentThread().contextClassLoader
-    ): KlassSubIndex<T> {
-        val entries = getAnnotatedNames(annotation)
-        return findClasses(classLoader, entries)
-    }
-
-    /**
-     * Retrieves names of classes annotated by given annotation.
-     *
-     * The annotation must be annotated with [IndexAnnotated] for annotated classes
-     * to be indexed at compile-time by ClassIndexProcessor.
-     *
-     * Please note there is no verification if the class really exists. It can be missing when incremental
-     * compilation is used. Use [.getAnnotated] if you need the verification.
-     *
-     * @param annotation annotation to search class for
-     * @return names of annotated classes
-     */
-    fun getAnnotatedNames(annotation: KClass<out Annotation>): Set<String> {
-        return annotationIndex[annotation.java.canonicalName].orEmpty()
-    }
-
-    private fun <T : Any> findClasses(classLoader: ClassLoader, entries: Iterable<String>): KlassSubIndex<T> {
-        val classes = entries.mapNotNull {
-            try {
-                classLoader.loadClass(it)
-            } catch (e: ClassNotFoundException) {
-                null
-            }
-        }.map {
-            it as Class<T>
-        }.map {
-            it.kotlin
-        }
-        return KlassSubIndex(classes)
+    fun getAnnotated(annotation: KClass<out Annotation>): KlassSubIndex<Any> {
+        return annotationIndex[annotation].orEmpty().toIndex()
     }
 }

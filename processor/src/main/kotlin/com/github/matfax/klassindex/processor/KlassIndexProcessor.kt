@@ -26,6 +26,7 @@ import com.github.matfax.klassindex.KlassIndex.SUBCLASS_INDEX
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.WildcardTypeName.Companion.STAR
 import java.io.File
 import java.io.IOException
 import java.lang.annotation.Inherited
@@ -40,12 +41,13 @@ import javax.lang.model.util.ElementScanner8
 import javax.lang.model.util.Elements
 import javax.lang.model.util.Types
 import javax.tools.Diagnostic
+import kotlin.reflect.KClass
 
 /**
  * Generates index files for [KlassIndex].
  */
 @AutoService(Processor::class)
-open class ClassIndexProcessor : AbstractProcessor() {
+open class KlassIndexProcessor : AbstractProcessor() {
     private val subclassMap = mutableMapOf<String, MutableSet<String>>()
     private val annotatedMap = mutableMapOf<String, MutableSet<String>>()
 
@@ -136,24 +138,20 @@ open class ClassIndexProcessor : AbstractProcessor() {
 
     private fun storeIndex(className: String, index: Map<String, Set<String>>) {
         val indexTable: ParameterizedTypeName = Map::class.asClassName().parameterizedBy(
-                String::class.asClassName(),
-                Set::class.parameterizedBy(String::class)
+                KClass::class.asClassName().parameterizedBy(STAR),
+                Set::class.asClassName().parameterizedBy(KClass::class.asClassName().parameterizedBy(STAR))
         )
 
         val indexBuilder = FunSpec.builder("index")
                 .addModifiers(KModifier.OVERRIDE)
                 .returns(indexTable)
-                .addStatement("val result = mutableMapOf<String, Set<String>>()"
-                )
+                .addStatement("val result = mutableMapOf<KClass<*>, Set<KClass<*>>>()")
         index.forEach {
-            val values = it.value
-                    .map { "\"$it\"" }
-                    .joinToString(",\n")
-                    .replace("\$", "\\\$")
-            indexBuilder.addStatement("result[%S] = setOf($values)", it.key)
+            val values = it.value.map { "$it::class" }.joinToString(",\n")
+            indexBuilder.addStatement("result[${it.key}::class] = setOf($values)")
         }
 
-        indexBuilder.addStatement("return result")
+        indexBuilder.addStatement("return result.toMap()")
 
         val file = FileSpec.builder(KlassIndex::class.java.`package`.name, className)
                 .addType(
@@ -260,7 +258,7 @@ open class ClassIndexProcessor : AbstractProcessor() {
                 if (enclosingElement is TypeElement) {
                     val enclosingName = getFullName(enclosingElement)
                     if (enclosingName != null) {
-                        return "$enclosingName$${typeElement.simpleName}"
+                        return "$enclosingName.${typeElement.simpleName}"
                     }
                 }
                 return null

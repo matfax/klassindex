@@ -36,6 +36,8 @@ class InnerClasses {
     class InnerComponent {
         @Component
         internal inner class InnerInnerComponent
+
+        companion object
     }
 
     // local classes should not be indexed

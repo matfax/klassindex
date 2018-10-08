@@ -18,10 +18,13 @@
 package com.github.matfax.klassindex
 
 import assertk.assert
+import assertk.assertions.contains
 import assertk.assertions.containsOnly
+import assertk.assertions.isNotEmpty
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.lang.reflect.Modifier
+import kotlin.reflect.full.companionObjectInstance
 
 class KlassSubIndexTest {
 
@@ -103,5 +106,29 @@ class KlassSubIndexTest {
     fun shouldReturnOnlyWithPublicDefaultConstructor() {
         val result = list.withPublicDefaultConstructor().toList()
         assert(result).containsOnly(InnerClasses.InnerComponent::class)
+    }
+
+    @Test
+    fun shouldReturnOnlyObjects() {
+        val result = list.objects().toList()
+        assert(result).containsOnly(SecondComponent)
+    }
+
+    @Test
+    fun shouldReturnMembers() {
+        val result = list.members().toList()
+        assert(result).isNotEmpty()
+    }
+
+    @Test
+    fun shouldReturnOnlyCompanionObjects() {
+        val result = list.companionObjects().toList()
+        assert(result).containsOnly(InnerClasses.InnerComponent::class.companionObjectInstance)
+    }
+
+    @Test
+    fun shouldReturnNestedClasses() {
+        val result = list.nested().toList()
+        assert(result).contains(InnerClasses.InnerComponent.InnerInnerComponent::class)
     }
 }

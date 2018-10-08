@@ -18,7 +18,9 @@
 package com.github.matfax.klassindex
 
 import java.lang.reflect.Modifier
+import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
+import kotlin.reflect.full.companionObjectInstance
 
 inline class KlassSubIndex<T : Any>(private val classes: List<KClass<out T>>) : Iterable<KClass<out T>> {
     override fun iterator(): Iterator<KClass<out T>> {
@@ -77,6 +79,23 @@ inline class KlassSubIndex<T : Any>(private val classes: List<KClass<out T>>) : 
                 return@filter false
             }
         }
+    }
+
+    fun objects(): List<T> {
+        return this.map { it.objectInstance }.filterNotNull()
+    }
+
+
+    fun nested(): KlassSubIndex<*> {
+        return this.flatMap { it.nestedClasses }.toIndex()
+    }
+
+    fun members(): List<KCallable<*>> {
+        return this.flatMap { it.members }
+    }
+
+    fun companionObjects(): List<Any> {
+        return this.map { it.companionObjectInstance }.filterNotNull()
     }
 
 }

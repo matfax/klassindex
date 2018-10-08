@@ -61,7 +61,8 @@
 ## How to use it?
 
 ### Add Dependency
-1. Gradle
+#### Gradle
+
 * Add repository
 ```groovy
 allprojects {
@@ -75,7 +76,9 @@ allprojects {
 compile 'com.github.matfax.klassindex:library:4.+'
 kapt 'com.github.matfax.klassindex:processor:4.+'
 ```
-1. Gradle in Kotlin DSL
+
+#### Gradle in Kotlin DSL
+
 * Add repository
 ```kotlin
 allprojects {
@@ -89,7 +92,9 @@ allprojects {
 compile("com.github.matfax.klassindex:library:4.+")
 kapt("com.github.matfax.klassindex:processor:4.+")
 ```
-1. For others, check: [Jitpack](https://jitpack.io/#matfax/klassindex)
+
+#### Others
+For others, check: [Jitpack](https://jitpack.io/#matfax/klassindex)
 
 ### Annotations
 

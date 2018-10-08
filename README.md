@@ -115,41 +115,6 @@ interface YourSuperclass
 KlassIndex.getSubclasses(YourSuperclass::class)
 ```
 
-## How it works?
-
-### Annotation Index Processor
-
-KlassIndex indexes your classes at compile time by providing the implementation of the standard [annotation 
-processor](http://www.jcp.org/en/jsr/detail?id=269). The index is then used by kapt utilizing kotlinpoet to generate new Kotlin source files that hold the static references to the indexed classes. The compiler uses the source files as if they were manually written.
-
-### Run Time Library
-
-KlassIndex provides a library to load the statically compiled index from the generated classes and to process them.
-
-## Why KlassIndex?
-
-### Speed
-
-Traditional classpath scanning is a [very](https://www.leveluplunch.com/blog/2015/08/11/reducing-startup-times-spring-applications-context/)
-[slow](https://wiki.apache.org/tomcat/HowTo/FasterStartUp) process. 
-Replacing it with compile-time indexing speeds Java applications bootstrap considerably.
-
-Here are the results of the [benchmark](https://github.com/atteo/classindex-benchmark) comparing ClassIndex with various scanning solutions.
-
-| Library                  | Application startup time |
-| :----------------------- |-------------------------:|
-| None - hardcoded list    |                  0:00.18 |
-| [Scannotation](http://scannotation.sourceforge.net/)             |                  0:05.11 |
-| [Reflections](https://github.com/ronmamo/reflections)            |                  0:05.37 |
-| Reflections Maven plugin |                                                          0:00.52 |
-| [Corn](https://sites.google.com/site/javacornproject/corn-cps)   |                  0:24.60 |
-| ClassIndex               |                  0:00.18 |
-| KlassIndex | TBD | TBD |
-
-Notes: benchmark was performed on Intel i5-2520M CPU @ 2.50GHz, classpath size was set to 121MB.
-
-## Usage
-
 ### Index Processing
 
 Filtering allows you to select only classes with desired characteristics. Here are some basic samples:
@@ -173,3 +138,36 @@ KlassIndex.getAnnotated(SomeAnnotation.class).annotatedWith(SecondAnnotation::cl
 ```
 
 For more examples, check the [test file](https://github.com/matfax/klassindex/blob/master/test/src/test/kotlin/com/github/matfax/klassindex/KlassSubIndexTest.kt).
+
+## How it works?
+
+### Annotation Index Processor
+
+KlassIndex indexes your classes at compile time by providing the implementation of the standard [annotation 
+processor](http://www.jcp.org/en/jsr/detail?id=269). The index is then used by kapt utilizing kotlinpoet to generate new Kotlin source files that hold the static references to the indexed classes. The compiler uses the source files as if they were manually written.
+
+### Run Time Library
+
+KlassIndex provides a library to load the statically compiled index from the generated classes and to process them.
+
+## Why KlassIndex?
+
+### Speed
+
+Traditional classpath scanning is a [very](https://www.leveluplunch.com/blog/2015/08/11/reducing-startup-times-spring-applications-context/)
+[slow](https://wiki.apache.org/tomcat/HowTo/FasterStartUp) process. 
+Replacing it with compile-time indexing speeds Java applications bootstrap considerably.
+
+Here are the results of the [benchmark](https://github.com/atteo/classindex-benchmark) comparing ClassIndex with various scanning solutions.
+
+| Library | Application startup time |
+|----------------------------------------------------------------|-------------------------:|
+| None - hardcoded list | 0:00.18 |
+| [Scannotation](http://scannotation.sourceforge.net/) | 0:05.11 |
+| [Reflections](https://github.com/ronmamo/reflections) | 0:05.37 |
+| Reflections Maven plugin | 0:00.52 |
+| [Corn](https://sites.google.com/site/javacornproject/corn-cps) | 0:24.60 |
+| ClassIndex | 0:00.18 |
+| KlassIndex | TBD |
+
+Notes: benchmark was performed on Intel i5-2520M CPU @ 2.50GHz, classpath size was set to 121MB.

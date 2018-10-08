@@ -6,7 +6,6 @@ plugins {
 dependencies {
     compile(kotlin("stdlib"))
     compile(project(":library"))
-    compile(project(":processor"))
     kapt(project(":processor"))
     testCompile("com.github.matfax.assertk3:assertk-jvm:0.13.1")
     testCompile("org.junit.jupiter:junit-jupiter-api:5.3.1")

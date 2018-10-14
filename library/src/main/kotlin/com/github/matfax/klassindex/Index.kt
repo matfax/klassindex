@@ -19,11 +19,21 @@ package com.github.matfax.klassindex
 
 import kotlin.reflect.KClass
 
+/**
+ * The interface to generated index classes.
+ */
 interface Index {
 
+    /**
+     * Access the compiled index map.
+     */
     fun index(): Map<KClass<*>, Set<KClass<*>>>
 
     companion object {
+
+        /**
+         * Load an index class with the given [className] from the class loader.
+         */
         fun load(className: String): Index {
             return Class.forName(
                     "${this::class.java.`package`.name}.$className"

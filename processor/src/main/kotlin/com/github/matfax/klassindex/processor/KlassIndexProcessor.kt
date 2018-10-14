@@ -177,19 +177,22 @@ open class KlassIndexProcessor : AbstractProcessor() {
                 .forEach { mirror ->
 
                     val superType = mirror as DeclaredType
-                    val superTypeElement = superType.asElement() as TypeElement
-                    storeSubclass(superTypeElement, rootElement)
+                    val superTypeElement = superType.asElement() as? TypeElement
+                    superTypeElement?.let { element ->
 
-                    superTypeElement.annotationMirrors
-                            .asSequence()
-                            .map {
-                                it.annotationType
-                                        .asElement() as TypeElement
-                            }
-                            .filter { hasAnnotation(it, Inherited::class.java) }
-                            .forEach { storeAnnotation(it, rootElement) }
+                        storeSubclass(element, rootElement)
 
-                    indexSupertypes(rootElement, superTypeElement)
+                        element.annotationMirrors
+                                .asSequence()
+                                .map {
+                                    it.annotationType
+                                            .asElement() as TypeElement
+                                }
+                                .filter { hasAnnotation(it, Inherited::class.java) }
+                                .forEach { storeAnnotation(it, rootElement) }
+
+                        indexSupertypes(rootElement, element)
+                    }
                 }
     }
 

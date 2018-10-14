@@ -37,7 +37,11 @@ allprojects {
     }
 
     group = "com.github.matfax"
-    version = (extensions.extraProperties.get("gitVersion") as Closure<*>).call() ?: "dirty"
+    version = (extensions.extraProperties.get("gitVersion") as? Closure<*>)?.call() ?: "dirty"
+
+    tasks.create("printVersionName") {
+        doLast { println(version) }
+    }
 
     tasks {
         getByName<Upload>("uploadArchives") {

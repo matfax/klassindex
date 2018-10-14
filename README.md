@@ -2,7 +2,7 @@
 
 [![](https://jitpack.io/v/matfax/klassindex.svg)](https://jitpack.io/#matfax/klassindex)
 [![Build Status](https://travis-ci.com/matfax/classindex.svg?branch=master)](https://travis-ci.com/matfax/classindex)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3241ef70d6614b049355a4bff6da7df3)](https://www.codacy.com/app/matfax/klassindex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matfax/klassindex&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c86812d540f643fba994281e2561d8b4)](https://www.codacy.com/app/matfax/klassindex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matfax/klassindex&amp;utm_campaign=Badge_Grade)
 ![GitHub License](https://img.shields.io/github/license/matfax/klassindex.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex.svg)
 

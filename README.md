@@ -2,7 +2,7 @@
 
 [![](https://jitpack.io/v/matfax/klassindex.svg)](https://jitpack.io/#matfax/klassindex)
 [![Build Status](https://travis-ci.com/matfax/classindex.svg?branch=master)](https://travis-ci.com/matfax/classindex)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c86812d540f643fba994281e2561d8b4)](https://www.codacy.com/app/matfax/klassindex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matfax/klassindex&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/375652cccae34d8395f44a990a43d022)](https://www.codacy.com/app/matfax/klassindex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matfax/klassindex&amp;utm_campaign=Badge_Grade)
 ![GitHub License](https://img.shields.io/github/license/matfax/klassindex.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex.svg)
 
@@ -10,24 +10,24 @@
 
 **K**lassIndex is the younger Kotlin brother of [atteo/classindex](https://github.com/atteo/classindex). However, it differs from ClassIndex in various aspects.
 
-| Aspects | ClassIndex | **K**lassIndex |
-|------------------------|----------------------------------------------------|-----------------------------------------|
-| Language | Java | Kotlin |
-| Supported Classes | Any Java class | `Any` Kotlin class |
-| Supported Build Tools | Maven and outdated Gradle versions<sup>7</sup> | Any Gradle version |
-| Supported Scopes | Annotations, Subclasses, Packages | Annotations, Subclasses<sup>6</sup> |
-| Service Loader Support | Yes | No, superfluous<sup>8</sup> |
-| JaxB Index | Yes | No |
-| Stores Documentation | Yes | No |
-| IDE Support | Eclipse, Netbeans, Jetbrains (limited)<sup>3</sup> | Full Jetbrains support |
-| Android Support | Limited<sup>2</sup> | Yes |
-| Runtime Performance | Great | Even Greater<sup>1</sup> |
-| Filtering Support | Limited | Complete functional support<sup>4</sup> |
-| Extension Support | Yes | Theoretically, TBD |
-| Jar Shading Support | Yes | Maybe |
-| Compile Time Safety | Limited<sup>5</sup> | Complete |
-| Class Loader Required | Yes | No |
-| License | Apache 2.0 | Apache 2.0 |
+| Aspects                | ClassIndex                                         | **K**lassIndex                          |
+| ---------------------- | -------------------------------------------------- | --------------------------------------- |
+| Language               | Java                                               | Kotlin                                  |
+| Supported Classes      | Any Java class                                     | `Any` Kotlin class                      |
+| Supported Build Tools  | Maven and outdated Gradle versions<sup>7</sup>     | Any Gradle version                      |
+| Supported Scopes       | Annotations, Subclasses, Packages                  | Annotations, Subclasses<sup>6</sup>     |
+| Service Loader Support | Yes                                                | No, superfluous<sup>8</sup>             |
+| JaxB Index             | Yes                                                | No                                      |
+| Stores Documentation   | Yes                                                | No                                      |
+| IDE Support            | Eclipse, Netbeans, Jetbrains (limited)<sup>3</sup> | Full Jetbrains support                  |
+| Android Support        | Limited<sup>2</sup>                                | Yes                                     |
+| Runtime Performance    | Great                                              | Even Greater<sup>1</sup>                |
+| Filtering Support      | Limited                                            | Complete functional support<sup>4</sup> |
+| Extension Support      | Yes                                                | Theoretically, TBD                      |
+| Jar Shading Support    | Yes                                                | Maybe                                   |
+| Compile Time Safety    | Limited<sup>5</sup>                                | Complete                                |
+| Class Loader Required  | Yes                                                | No                                      |
+| License                | Apache 2.0                                         | Apache 2.0                              |
 
 ### Explanation
 
@@ -49,16 +49,17 @@
 
 ### Methods
 
-*   the list of classes annotated by a given annotation getAnnotated()
-*   the list of classes implementing a given interface getSubclasses()
+-   the list of classes annotated by a given annotation getAnnotated()
+-   the list of classes implementing a given interface getSubclasses()
 
 ### Advantages
 
 **K**lassIndex
-*   is faster than reading a file, it is not impacted by the usual performance penalty of the classpath scanning
-*   is not depending on a class loader
-*   is leight-weight and simple
-*   supports incremental compilation in IntelliJ and Android Studio
+
+-   is faster than reading a file, it is not impacted by the usual performance penalty of the classpath scanning
+-   is not depending on a class loader
+-   is leight-weight and simple
+-   supports incremental compilation in IntelliJ and Android Studio
 
 ## How to use it?
 
@@ -66,7 +67,8 @@
 
 #### Gradle
 
-*   Add repository
+-   Add repository
+
 ```groovy
 allprojects {
 	repositories {
@@ -74,7 +76,9 @@ allprojects {
 	}
 }
 ```
-*   Add dependencies
+
+-   Add dependencies
+
 ```groovy
 compile 'com.github.matfax.klassindex:library:4.+'
 kapt 'com.github.matfax.klassindex:processor:4.+'
@@ -82,7 +86,8 @@ kapt 'com.github.matfax.klassindex:processor:4.+'
 
 #### Gradle in Kotlin DSL
 
-*   Add repository
+-   Add repository
+
 ```kotlin
 allprojects {
     repositories {
@@ -90,7 +95,9 @@ allprojects {
 	}
 }
 ```
-*   Add dependencies
+
+-   Add dependencies
+
 ```kotlin
 compile("com.github.matfax.klassindex:library:4.+")
 kapt("com.github.matfax.klassindex:processor:4.+")
@@ -103,11 +110,14 @@ For others, check: [Jitpack](https://jitpack.io/#matfax/klassindex)
 ### Annotations
 
 1.  Annotate your annotation with @IndexAnnotated
+
 ```kotlin
 @IndexAnnotated
 annotation class YourAnnotation
 ```
+
 1.  Retrieve a list of annotated classes at run-time
+
 ```kotlin
 KlassIndex.getAnnotated(Component::class)
 ```
@@ -115,11 +125,14 @@ KlassIndex.getAnnotated(Component::class)
 ### Subclasses
 
 1.  Annotate your superclass with @IndexSubclasses
+
 ```kotlin
 @IndexSubclasses
 interface YourSuperclass
 ```
+
 1.  Retrieve a list of annotated classes at run-time
+
 ```kotlin
 KlassIndex.getSubclasses(YourSuperclass::class)
 ```
@@ -128,19 +141,19 @@ KlassIndex.getSubclasses(YourSuperclass::class)
 
 Filtering allows you to select only classes with desired characteristics. Here are some basic samples:
 
-*Selecting only top-level classes
+\*Selecting only top-level classes
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).topLevel()
 ```
 
-*Selecting only classes which are top level and public at the same time
+\*Selecting only classes which are top level and public at the same time
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).topLevel().withModifiers(Modifier.PUBLIC)
 ```
 
-*Selecting only the object instances from singleton classes that are annotated with an additional annotation.
+\*Selecting only the object instances from singleton classes that are annotated with an additional annotation.
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).annotatedWith(SecondAnnotation::class).objects()
@@ -169,14 +182,14 @@ Replacing it with compile-time indexing speeds Java applications bootstrap consi
 
 Here are the results of the [benchmark](https://github.com/atteo/classindex-benchmark) comparing ClassIndex with various scanning solutions.
 
-| Library | Application startup time |
-|----------------------------------------------------------------|-------------------------:|
-| None - hardcoded list | 0:00.18 |
-| [Scannotation](http://scannotation.sourceforge.net/) | 0:05.11 |
-| [Reflections](https://github.com/ronmamo/reflections) | 0:05.37 |
-| Reflections Maven plugin | 0:00.52 |
-| [Corn](https://sites.google.com/site/javacornproject/corn-cps) | 0:24.60 |
-| ClassIndex | 0:00.18 |
-| **K**lassIndex | TBD |
+| Library                                                        | Application startup time |
+| -------------------------------------------------------------- | -----------------------: |
+| None - hardcoded list                                          |                  0:00.18 |
+| [Scannotation](http://scannotation.sourceforge.net/)           |                  0:05.11 |
+| [Reflections](https://github.com/ronmamo/reflections)          |                  0:05.37 |
+| Reflections Maven plugin                                       |                  0:00.52 |
+| [Corn](https://sites.google.com/site/javacornproject/corn-cps) |                  0:24.60 |
+| ClassIndex                                                     |                  0:00.18 |
+| **K**lassIndex                                                 |                      TBD |
 
 Notes: benchmark was performed on Intel i5-2520M CPU @ 2.50GHz, classpath size was set to 121MB.

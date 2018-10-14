@@ -108,7 +108,7 @@ open class KlassIndexProcessor : AbstractProcessor() {
                                 } catch (e: IOException) {
                                     messager.printMessage(
                                             Diagnostic.Kind.ERROR,
-                                            "[ClassIndexProcessor] ${e.message}"
+                                            "[KlassIndexProcessor] ${e.message}"
                                     )
                                 }
 
@@ -125,9 +125,9 @@ open class KlassIndexProcessor : AbstractProcessor() {
             storeIndex(ANNOTATION_INDEX, annotatedMap)
         }.onFailure { e: Throwable ->
             val msg = if (e is IOException) {
-                "[ClassIndexProcessor] Can't write index file: ${e.message}"
+                "[KlassIndexProcessor] Can't write index file: ${e.message}"
             } else {
-                "[ClassIndexProcessor] Internal error: ${e.message}"
+                "[KlassIndexProcessor] Internal error: ${e.message}"
             }
             messager.printMessage(Diagnostic.Kind.ERROR, msg)
             messager.printMessage(Diagnostic.Kind.ERROR, e.stackTrace.joinToString("\n"))
@@ -200,7 +200,7 @@ open class KlassIndexProcessor : AbstractProcessor() {
             if (e.javaClass.name != "com.sun.tools.javac.code.Symbol\$CompletionFailure") {
                 messager.printMessage(
                         Diagnostic.Kind.ERROR,
-                        "[ClassIndexProcessor] Can't check annotation: ${e.message}"
+                        "[KlassIndexProcessor] Can't check annotation: ${e.message}"
                 )
             }
         }

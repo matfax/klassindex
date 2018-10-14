@@ -8,6 +8,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "classindex"
+rootProject.name = "klassindex"
 
 include("library", "processor", "test")

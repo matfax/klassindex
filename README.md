@@ -136,7 +136,7 @@ For others, check: [Jitpack](https://jitpack.io/#matfax/klassindex)
 annotation class YourAnnotation
 ```
 
-1.  Retrieve a list of annotated classes at run-time
+2.  Retrieve a list of annotated classes at run-time
 
 ```kotlin
 KlassIndex.getAnnotated(Component::class)
@@ -151,7 +151,7 @@ KlassIndex.getAnnotated(Component::class)
 interface YourSuperclass
 ```
 
-1.  Retrieve a list of annotated classes at run-time
+2.  Retrieve a list of annotated classes at run-time
 
 ```kotlin
 KlassIndex.getSubclasses(YourSuperclass::class)

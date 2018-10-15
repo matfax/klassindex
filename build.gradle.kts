@@ -8,8 +8,8 @@ import java.lang.reflect.Method
 plugins {
     base
     maven
-    kotlin("jvm") version "1.3.0-rc-131" apply false
-    kotlin("kapt") version "1.3.0-rc-131" apply false
+    kotlin("jvm") version "1.3.0-rc-146" apply false
+    kotlin("kapt") version "1.3.0-rc-146" apply false
     id("com.palantir.git-version") version "0.12.0-rc2"
     id("com.gradle.build-scan") version "1.16"
 }
@@ -20,7 +20,8 @@ subprojects {
         kotlinOptions {
             suppressWarnings = true
             jvmTarget = "1.8"
-            freeCompilerArgs = freeCompilerArgs.plus("-XXLanguage:+InlineClasses")
+            freeCompilerArgs = freeCompilerArgs
+                    .plus("-XXLanguage:+InlineClasses")
         }
     }
 }

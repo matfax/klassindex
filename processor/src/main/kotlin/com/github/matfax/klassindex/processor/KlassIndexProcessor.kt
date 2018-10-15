@@ -17,12 +17,7 @@
 
 package com.github.matfax.klassindex.processor
 
-import com.github.matfax.klassindex.Index
-import com.github.matfax.klassindex.IndexAnnotated
-import com.github.matfax.klassindex.IndexSubclasses
-import com.github.matfax.klassindex.KlassIndex
-import com.github.matfax.klassindex.KlassIndex.ANNOTATION_INDEX
-import com.github.matfax.klassindex.KlassIndex.SUBCLASS_INDEX
+import com.github.matfax.klassindex.*
 import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
@@ -121,8 +116,8 @@ open class KlassIndexProcessor : AbstractProcessor() {
                 return false
             }
 
-            storeIndex(SUBCLASS_INDEX, subclassMap)
-            storeIndex(ANNOTATION_INDEX, annotatedMap)
+            storeIndex(SUBCLASS_INDEX!!, subclassMap)
+            storeIndex(ANNOTATION_INDEX!!, annotatedMap)
         }.onFailure { e: Throwable ->
             val msg = if (e is IOException) {
                 "[KlassIndexProcessor] Can't write index file: ${e.message}"
@@ -272,6 +267,8 @@ open class KlassIndexProcessor : AbstractProcessor() {
 
     companion object {
         const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
+        val SUBCLASS_INDEX = SubclassIndex::class.simpleName
+        val ANNOTATION_INDEX = AnnotationIndex::class.simpleName
     }
 
 }

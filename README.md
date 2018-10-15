@@ -58,7 +58,7 @@
 
 -   is faster than reading a file, it is not impacted by the usual performance penalty of the classpath scanning
 -   is not depending on a class loader
--   is leight-weight and simple
+-   is light-weight and simple
 -   supports incremental compilation in IntelliJ and Android Studio
 
 ## How to use it?
@@ -66,6 +66,15 @@
 ### Add Dependency
 
 #### Gradle
+
+-   Add kapt
+
+```groovy
+plugins {
+    // Replace with the latest Kotlin version
+    id "org.jetbrains.kotlin.kapt" version "1.+"
+}
+```
 
 -   Add repository
 
@@ -80,11 +89,21 @@ allprojects {
 -   Add dependencies
 
 ```groovy
+// Replace with the latest versions from Jitpack
 compile 'com.github.matfax.klassindex:library:4.+'
 kapt 'com.github.matfax.klassindex:processor:4.+'
 ```
 
 #### Gradle in Kotlin DSL
+
+-   Add kapt
+
+```kotlin
+plugins {
+    // Replace with the latest Kotlin version
+    kotlin("kapt") version "1.+"
+}
+```
 
 -   Add repository
 
@@ -99,6 +118,7 @@ allprojects {
 -   Add dependencies
 
 ```kotlin
+// Replace with the latest versions from Jitpack
 compile("com.github.matfax.klassindex:library:4.+")
 kapt("com.github.matfax.klassindex:processor:4.+")
 ```

@@ -20,19 +20,14 @@ package com.github.matfax.klassindex
 import kotlin.reflect.KClass
 
 /**
- * The interface to generated index classes.
+ * Empty template for the AnnotationIndex.
+ * It is to be overridden by kapt, but necessary for the compiler.
  */
-interface Index {
-
-    /**
-     * Indicates that the application has achieved an illegal state that could not be achieved if the annotation
-     * processor were properly executed.
-     */
-    class AnnotationNotProcessedException(message: String) : IllegalStateException(message)
-
-    /**
-     * Access the compiled index map.
-     */
-    fun index(): Map<KClass<*>, Set<KClass<*>>>
+object AnnotationIndex : Index {
+    override fun index(): Map<KClass<*>, Set<KClass<*>>> {
+        throw Index.AnnotationNotProcessedException(
+                "${this::class.simpleName} was not created by the annotation processor."
+        )
+    }
 
 }

@@ -27,11 +27,8 @@ import kotlin.reflect.KClass
  */
 object KlassIndex {
 
-    const val SUBCLASS_INDEX = "SubclassIndex"
-    const val ANNOTATION_INDEX = "AnnotationIndex"
-
-    private val subclassIndex by lazy { Index.load(SUBCLASS_INDEX).index() }
-    private val annotationIndex by lazy { Index.load(ANNOTATION_INDEX).index() }
+    private val subclassIndex by lazy { SubclassIndex.index() }
+    private val annotationIndex by lazy { AnnotationIndex.index() }
 
     /**
      * Retrieves a list of subclasses of the given class.

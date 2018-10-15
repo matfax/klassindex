@@ -161,19 +161,19 @@ KlassIndex.getSubclasses(YourSuperclass::class)
 
 Filtering allows you to select only classes with desired characteristics. Here are some basic samples:
 
-\*Selecting only top-level classes
+* Selecting only top-level classes
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).topLevel()
 ```
 
-\*Selecting only classes which are top level and public at the same time
+* Selecting only classes which are top level and public at the same time
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).topLevel().withModifiers(Modifier.PUBLIC)
 ```
 
-\*Selecting only the object instances from singleton classes that are annotated with an additional annotation.
+* Selecting only the object instances from singleton classes that are annotated with an additional annotation.
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).annotatedWith(SecondAnnotation::class).objects()

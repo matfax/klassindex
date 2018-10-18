@@ -19,3 +19,19 @@ tasks.withType<Test> {
         events("passed", "skipped", "failed")
     }
 }
+
+kapt {
+    useBuildCache = true
+    arguments {
+        arg(
+                "com.github.matfax.klassindex.IndexAnnotated",
+                "$group.GivenAnnotation",
+                "$group.AnotherGivenAnnotation"
+        )
+        arg(
+                "com.github.matfax.klassindex.IndexSubclasses",
+                "$group.GivenAbstractKlass",
+                "java.lang.Exception"
+        )
+    }
+}

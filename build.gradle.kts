@@ -37,7 +37,7 @@ allprojects {
         maven("http://dl.bintray.com/kotlin/kotlin-eap")
     }
 
-    group = "com.github.matfax"
+    group = "com.github.matfax.klassindex"
     version = (extensions.extraProperties.get("gitVersion") as? Closure<*>)?.call() ?: "dirty"
 
     tasks.create("printVersionName") {

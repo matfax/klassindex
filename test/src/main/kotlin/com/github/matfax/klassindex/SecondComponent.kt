@@ -17,9 +17,15 @@
 
 package com.github.matfax.klassindex
 
+/**
+ * Second component.
+ */
 @Component
 object SecondComponent {
 
+    /**
+     * Test method.
+     */
     fun test() {
 
     }

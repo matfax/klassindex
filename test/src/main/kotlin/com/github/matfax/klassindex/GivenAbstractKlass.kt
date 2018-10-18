@@ -18,32 +18,6 @@
 package com.github.matfax.klassindex
 
 /**
- * Inner classes test.
+ * Some given class.
  */
-sealed class InnerClasses : GivenAbstractKlass() {
-
-    // anonymous inner classes should not be indexed
-    private val module = object : Module {
-
-    }
-
-    class MyException(msg: String) : Exception(msg)
-
-    // both static and non-static inner classes should be indexed
-    class InnerService : Service
-
-    inner class InnerModule : Module
-
-    @Component
-    sealed class InnerComponent {
-        @Component
-        internal inner class InnerInnerComponent
-
-        companion object
-    }
-
-    // local classes should not be indexed
-    fun testMethod() {
-        class NotIndexedClass
-    }
-}
+abstract class GivenAbstractKlass

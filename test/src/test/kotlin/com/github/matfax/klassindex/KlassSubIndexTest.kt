@@ -29,6 +29,7 @@ import kotlin.reflect.full.companionObjectInstance
 class KlassSubIndexTest {
 
     private val list = listOf(
+            GivenAbstractKlass::class,
             SecondComponent::class,
             InnerClasses.InnerComponent::class,
             InnerClasses.InnerComponent.InnerInnerComponent::class,
@@ -39,13 +40,18 @@ class KlassSubIndexTest {
     @Test
     fun shouldReturnTopLevelClasses() {
         val result = list.topLevel().toList()
-        assert(result).containsOnly(SecondComponent::class, Service::class)
+        assert(result).containsOnly(
+                GivenAbstractKlass::class,
+                SecondComponent::class,
+                Service::class
+        )
     }
 
     @Test
     fun shouldReturnTopLevelOrStaticNestedClasses() {
         val result = list.topLevelOrStaticNested().toList()
         assert(result).containsOnly(
+                GivenAbstractKlass::class,
                 SecondComponent::class,
                 InnerClasses.InnerComponent::class,
                 Service::class
@@ -95,6 +101,7 @@ class KlassSubIndexTest {
     fun shouldReturnOnlyWithoutModifiers() {
         val result = list.withoutModifiers(Modifier.STATIC).toList()
         assert(result).containsOnly(
+                GivenAbstractKlass::class,
                 SecondComponent::class,
                 InnerClasses.InnerComponent.InnerInnerComponent::class,
                 InnerClasses.InnerModule::class,
@@ -105,13 +112,32 @@ class KlassSubIndexTest {
     @Test
     fun shouldReturnOnlyWithPublicDefaultConstructor() {
         val result = list.withPublicDefaultConstructor().toList()
-        assert(result).containsOnly(InnerClasses.InnerComponent::class)
+        assert(result).containsOnly(
+                GivenAbstractKlass::class
+        )
     }
 
     @Test
     fun shouldReturnOnlyObjects() {
         val result = list.objects().toList()
         assert(result).containsOnly(SecondComponent)
+    }
+
+    @Test
+    fun shouldReturnOnlyAbstractClasses() {
+        val result = list.abstract().toList()
+        assert(result).containsOnly(
+                Service::class,
+                GivenAbstractKlass::class
+        )
+    }
+
+    @Test
+    fun shouldReturnOnlySealedClasses() {
+        val result = list.sealed().toList()
+        assert(result).containsOnly(
+                InnerClasses.InnerComponent::class
+        )
     }
 
     @Test
@@ -137,6 +163,7 @@ class KlassSubIndexTest {
         val result = list.simpleNames().toList()
         assert(result).containsOnly(
                 "SecondComponent",
+                "GivenAbstractKlass",
                 "InnerComponent",
                 "InnerInnerComponent",
                 "InnerModule",

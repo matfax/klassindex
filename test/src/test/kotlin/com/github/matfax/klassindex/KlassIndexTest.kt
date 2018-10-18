@@ -22,20 +22,56 @@ import assertk.assertions.containsOnly
 import assertk.assertions.isEmpty
 import org.junit.jupiter.api.Test
 
+@Suppress("DEPRECATION")
 class KlassIndexTest {
     @Test
     fun shouldIndexSubclasses() {
-        val superclass = KlassIndex.getSubclasses(Service::class).toList()
-        assert(superclass).containsOnly(SecondService::class, InnerClasses.InnerService::class)
+        val subclasses = KlassIndex.getSubclasses(Service::class).toList()
+        assert(subclasses).containsOnly(SecondService::class, InnerClasses.InnerService::class)
     }
 
     @Test
     fun shouldIndexAnnotated() {
         val annotated = KlassIndex.getAnnotated(Component::class).toList()
         assert(annotated).containsOnly(
+                FirstComponent::class,
                 SecondComponent::class,
                 InnerClasses.InnerComponent::class,
                 InnerClasses.InnerComponent.InnerInnerComponent::class
+        )
+    }
+
+    @Test
+    fun shouldIndexKaptSubclassArguments() {
+        val subclasses = KlassIndex.getSubclasses(GivenAbstractKlass::class).toList()
+        assert(subclasses).containsOnly(
+                InnerClasses::class,
+                GivenKlass::class
+        )
+    }
+
+    @Test
+    fun shouldIndexExternalKaptArguments() {
+        val subclasses = KlassIndex.getSubclasses(Exception::class).toList()
+        assert(subclasses).containsOnly(
+                InnerClasses.MyException::class
+        )
+    }
+
+    @Test
+    fun shouldIndexKaptAnnotationArguments() {
+        val annotated = KlassIndex.getAnnotated(GivenAnnotation::class).toList()
+        assert(annotated).containsOnly(
+                FirstComponent::class,
+                GivenKlass::class
+        )
+    }
+
+    @Test
+    fun shouldIndexMultipleKaptAnnotationArguments() {
+        val annotated = KlassIndex.getAnnotated(AnotherGivenAnnotation::class).toList()
+        assert(annotated).containsOnly(
+                AnotherGivenKlass::class
         )
     }
 
@@ -57,14 +93,15 @@ class KlassIndexTest {
 
     @Test
     fun shouldNotIndexNotAnnotatedSuperclass() {
-        val superclass = KlassIndex.getSubclasses(SecondComponent::class).toList()
-        assert(superclass).isEmpty()
+        val subclasses = KlassIndex.getSubclasses(SecondComponent::class).toList()
+        assert(subclasses).isEmpty()
     }
 
     @Test
     fun shouldReturnNamesOfAnnotated() {
         val annotated = KlassIndex.getAnnotated(Component::class).qualifiedNames().toList()
         assert(annotated).containsOnly(
+                FirstComponent::class.qualifiedName,
                 SecondComponent::class.qualifiedName,
                 InnerClasses.InnerComponent::class.qualifiedName,
                 InnerClasses.InnerComponent.InnerInnerComponent::class.qualifiedName

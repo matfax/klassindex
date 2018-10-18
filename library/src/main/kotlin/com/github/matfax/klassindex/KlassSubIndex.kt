@@ -132,6 +132,20 @@ inline class KlassSubIndex<T : Any>(private val classes: Set<KClass<out T>>) : I
     }
 
     /**
+     * Returns the classes that are sealed.
+     */
+    fun sealed(): KlassSubIndex<*> {
+        return this.filter { it.isSealed }
+    }
+
+    /**
+     * Returns all sealed classes that are nested in the classes from the index.
+     */
+    fun abstract(): KlassSubIndex<*> {
+        return this.filter { it.isAbstract }
+    }
+
+    /**
      * Returns all class members from the index'es classes.
      */
     fun members(): List<KCallable<*>> {
@@ -142,21 +156,21 @@ inline class KlassSubIndex<T : Any>(private val classes: Set<KClass<out T>>) : I
      * Filters the index for classes that have companion objects and returns their initialized instances.
      */
     fun companionObjects(): List<Any> {
-        return this.map { it.companionObjectInstance }.filterNotNull()
+        return this.mapNotNull { it.companionObjectInstance }
     }
 
     /**
      * Gets the fully qualified names of the classes from the index.
      */
     fun qualifiedNames(): List<String> {
-        return this.map { it.qualifiedName }.filterNotNull()
+        return this.mapNotNull { it.qualifiedName }
     }
 
     /**
      * Gets the simple names of the classes from the index.
      */
     fun simpleNames(): List<String> {
-        return this.map { it.simpleName }.filterNotNull()
+        return this.mapNotNull { it.simpleName }
     }
 }
 

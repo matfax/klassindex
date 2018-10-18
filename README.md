@@ -2,7 +2,7 @@
 
 [![](https://jitpack.io/v/matfax/klassindex.svg)](https://jitpack.io/#matfax/klassindex)
 [![Build Status](https://travis-ci.com/matfax/klassindex.svg?branch=master)](https://travis-ci.com/matfax/klassindex)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7b56390321124d5fbbabfe08d2bab8b3)](https://www.codacy.com/app/matfax/klassindex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matfax/klassindex&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2e6175aef7ee4fef89b28cca2ce9b4f4)](https://www.codacy.com/app/matfax/klassindex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matfax/klassindex&amp;utm_campaign=Badge_Grade)
 ![GitHub License](https://img.shields.io/github/license/matfax/klassindex.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex.svg)
 
@@ -23,7 +23,8 @@
 | Android Support        | Limited<sup>2</sup>                                | Yes                                     |
 | Runtime Performance    | Great                                              | Even Greater<sup>1</sup>                |
 | Filtering Support      | Limited                                            | Complete functional support<sup>4</sup> |
-| Extension Support      | Yes                                                | Theoretically, TBD                      |
+| Extension Support      | Yes                                                | Theoretically                           |
+| Index external classes | Yes, by extending the processor                    | Yes, using kapt arguments               |
 | Jar Shading Support    | Yes                                                | Maybe                                   |
 | Compile Time Safety    | Limited<sup>5</sup>                                | Complete                                |
 | Class Loader Required  | Yes                                                | No                                      |
@@ -94,6 +95,14 @@ compile 'com.github.matfax.klassindex:library:4.+'
 kapt 'com.github.matfax.klassindex:processor:4.+'
 ```
 
+-   (Optional) Enable kapt build cache
+
+```groovy
+kapt {
+    useBuildCache = true
+}
+```
+
 #### Gradle in Kotlin DSL
 
 -   Add kapt
@@ -121,6 +130,14 @@ allprojects {
 // Replace with the latest versions from Jitpack
 compile("com.github.matfax.klassindex:library:4.+")
 kapt("com.github.matfax.klassindex:processor:4.+")
+```
+
+-   (Optional) Enable kapt build cache
+
+```kotlin
+kapt {
+    useBuildCache = true
+}
 ```
 
 #### Others
@@ -157,23 +174,23 @@ interface YourSuperclass
 KlassIndex.getSubclasses(YourSuperclass::class)
 ```
 
-### Index Processing
+### Index Traversing
 
 Filtering allows you to select only classes with desired characteristics. Here are some basic samples:
 
-* Selecting only top-level classes
+-   Selecting only top-level classes
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).topLevel()
 ```
 
-* Selecting only classes which are top level and public at the same time
+-   Selecting only classes which are top level and public at the same time
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).topLevel().withModifiers(Modifier.PUBLIC)
 ```
 
-* Selecting only the object instances from singleton classes that are annotated with an additional annotation.
+-   Selecting only the object instances from singleton classes that are annotated with an additional annotation.
 
 ```kotlin
 KlassIndex.getAnnotated(SomeAnnotation.class).annotatedWith(SecondAnnotation::class).objects()
@@ -181,7 +198,31 @@ KlassIndex.getAnnotated(SomeAnnotation.class).annotatedWith(SecondAnnotation::cl
 
 For more examples, check the [test file](https://github.com/matfax/klassindex/blob/master/test/src/test/kotlin/com/github/matfax/klassindex/KlassSubIndexTest.kt).
 
-## How it works?
+### Indexing Without Annotations
+
+Sometimes, you cannot easily use annotations to trigger compile time indexing
+because you don't control the source code of the classes which should be annotated.
+For instance, you cannot add `@IndexSubclasses` meta-annotation to [@Exception](https://docs.oracle.com/javase/8/docs/api/index.html?java/lang/Exception.html).
+
+To add the regarding annotations to the desired external class, just add an argument to kapt.
+
+```groovy
+kapt {
+    arguments {
+        arg(
+                "com.github.matfax.klassindex.IndexSubclasses", // IndexAnnotated alternatively
+                "java.lang.Exception" // this is a vararg
+        )
+    }
+}
+```
+
+Please consider that this option only provides you internal classes at the moment.
+That means, for the `Exception` example, you will only get your declared exceptions, not all available Java and Kotlin exceptions.
+
+Make sure not to use Kotlin type aliases, they will not be recognized (e.g., not `kotlin.Exception`).
+
+## How the Magic Happens
 
 ### Annotation Index Processor
 
@@ -190,9 +231,9 @@ processor](http://www.jcp.org/en/jsr/detail?id=269). The index is then used by k
 
 ### Run Time Library
 
-**K**lassIndex provides a library to load the statically compiled index from the generated classes and to process them.
+**K**lassIndex provides a library to access the statically compiled index from the generated classes and to process them.
 
-## Why KlassIndex?
+## Why KlassIndex
 
 ### Speed
 

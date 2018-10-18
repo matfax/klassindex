@@ -46,30 +46,17 @@ open class KlassIndexProcessor : AbstractProcessor() {
     private val subclassMap = mutableMapOf<String, MutableSet<String>>()
     private val annotatedMap = mutableMapOf<String, MutableSet<String>>()
 
-    private var annotationDriven = true
-    private val indexedAnnotations = mutableSetOf<String>()
-    private val indexedSuperclasses = mutableSetOf<String>()
+    private val indexedAnnotations: Set<String> by lazy {
+        processingEnv.options[KAPT_ANNOTATION_TARGETS].orEmpty().split(" ").toSet()
+    }
+    private val indexedSuperclasses: Set<String> by lazy {
+        processingEnv.options[KAPT_SUPERCLASS_TARGETS].orEmpty().split(" ").toSet()
+    }
 
     private lateinit var types: Types
     private lateinit var filer: Filer
     private lateinit var elementUtils: Elements
     private lateinit var messager: Messager
-
-    /**
-     * Adds given annotations for indexing.
-     */
-    protected fun indexAnnotations(vararg classes: Class<*>) {
-        annotationDriven = false
-        classes.mapTo(indexedAnnotations) { it.canonicalName }
-    }
-
-    /**
-     * Adds given classes for subclass indexing.
-     */
-    protected fun indexSubclasses(vararg classes: Class<*>) {
-        annotationDriven = false
-        classes.mapTo(indexedSuperclasses) { it.canonicalName }
-    }
 
     override fun getSupportedSourceVersion(): SourceVersion {
         return SourceVersion.latest()
@@ -91,13 +78,14 @@ open class KlassIndexProcessor : AbstractProcessor() {
     override fun process(annotations: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
         kotlin.runCatching {
             roundEnv.rootElements
-                    .filter { it is TypeElement }
+                    .filterIsInstance<TypeElement>()
                     .forEach { element ->
                         element.accept(object : ElementScanner8<Void, Void>() {
                             override fun visitType(typeElement: TypeElement, o: Void?): Void? {
                                 try {
                                     typeElement.annotationMirrors
-                                            .map { it.annotationType.asElement() as TypeElement }
+                                            .map { it.annotationType.asElement() }
+                                            .filterIsInstance<TypeElement>()
                                             .forEach { storeAnnotation(it, typeElement) }
                                     indexSupertypes(typeElement, typeElement)
                                 } catch (e: IOException) {
@@ -179,10 +167,8 @@ open class KlassIndexProcessor : AbstractProcessor() {
 
                         element.annotationMirrors
                                 .asSequence()
-                                .map {
-                                    it.annotationType
-                                            .asElement() as TypeElement
-                                }
+                                .map { it.annotationType.asElement() }
+                                .filterIsInstance<TypeElement>()
                                 .filter { hasAnnotation(it, Inherited::class.java) }
                                 .forEach { storeAnnotation(it, rootElement) }
 
@@ -208,29 +194,21 @@ open class KlassIndexProcessor : AbstractProcessor() {
 
     @Throws(IOException::class)
     private fun storeAnnotation(annotationElement: TypeElement, rootElement: TypeElement) {
-        if (indexedAnnotations.contains(annotationElement.qualifiedName.toString())) {
-            putElement(annotatedMap, annotationElement.qualifiedName.toString(), rootElement)
-        } else if (annotationDriven) {
-            val indexAnnotated = annotationElement.getAnnotation(IndexAnnotated::class.java)
-            if (indexAnnotated != null) {
-                putElement(annotatedMap, annotationElement.qualifiedName.toString(), rootElement)
-            }
+        val qualifiedName = annotationElement.qualifiedName.toString()
+        val annotationFound = annotationElement.getAnnotation(IndexAnnotated::class.java) != null
+        val kaptArgumentFound = indexedAnnotations.contains(qualifiedName)
+        if (annotationFound || kaptArgumentFound) {
+            putElement(annotatedMap, qualifiedName, rootElement)
         }
     }
 
     @Throws(IOException::class)
     private fun storeSubclass(superTypeElement: TypeElement, rootElement: TypeElement) {
-        if (indexedSuperclasses.contains(superTypeElement.qualifiedName.toString())) {
-            putElement(subclassMap, superTypeElement.qualifiedName.toString(), rootElement)
-        } else if (annotationDriven) {
-            val indexSubclasses = superTypeElement.getAnnotation(IndexSubclasses::class.java)
-            if (indexSubclasses != null) {
-                putElement(subclassMap, superTypeElement.qualifiedName.toString(), rootElement)
-            }
-        }
-        if (indexedSuperclasses.contains(superTypeElement.qualifiedName.toString())
-                || annotationDriven && superTypeElement.getAnnotation(IndexSubclasses::class.java) != null) {
-            putElement(subclassMap, superTypeElement.qualifiedName.toString(), rootElement)
+        val qualifiedName = superTypeElement.qualifiedName.toString()
+        val annotationFound = superTypeElement.getAnnotation(IndexSubclasses::class.java) != null
+        val kaptArgumentFound = indexedSuperclasses.contains(qualifiedName)
+        if (annotationFound || kaptArgumentFound) {
+            putElement(subclassMap, qualifiedName, rootElement)
         }
     }
 
@@ -267,8 +245,9 @@ open class KlassIndexProcessor : AbstractProcessor() {
 
     companion object {
         const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
+        val KAPT_ANNOTATION_TARGETS = IndexAnnotated::class.qualifiedName
+        val KAPT_SUPERCLASS_TARGETS = IndexSubclasses::class.qualifiedName
         val SUBCLASS_INDEX = SubclassIndex::class.simpleName
         val ANNOTATION_INDEX = AnnotationIndex::class.simpleName
     }
-
 }

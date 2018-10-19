@@ -17,16 +17,31 @@
 
 package com.github.matfax.klassindex.processor
 
-import com.github.matfax.klassindex.*
+import com.github.matfax.klassindex.AnnotationIndex
+import com.github.matfax.klassindex.Index
+import com.github.matfax.klassindex.IndexAnnotated
+import com.github.matfax.klassindex.IndexSubclasses
+import com.github.matfax.klassindex.KlassIndex
+import com.github.matfax.klassindex.SubclassIndex
 import com.google.auto.service.AutoService
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.ParameterizedTypeName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.WildcardTypeName.Companion.STAR
+import com.squareup.kotlinpoet.asClassName
 import java.io.File
 import java.io.IOException
 import java.lang.annotation.Inherited
 import java.util.*
-import javax.annotation.processing.*
+import javax.annotation.processing.AbstractProcessor
+import javax.annotation.processing.Filer
+import javax.annotation.processing.Messager
+import javax.annotation.processing.ProcessingEnvironment
+import javax.annotation.processing.Processor
+import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.NestingKind
 import javax.lang.model.element.TypeElement
@@ -159,8 +174,8 @@ open class KlassIndexProcessor : AbstractProcessor() {
                 .filter { it.kind == TypeKind.DECLARED }
                 .forEach { mirror ->
 
-                    val superType = mirror as DeclaredType
-                    val superTypeElement = superType.asElement() as? TypeElement
+                    val superType = mirror as? DeclaredType
+                    val superTypeElement = superType?.asElement() as? TypeElement
                     superTypeElement?.let { element ->
 
                         storeSubclass(element, rootElement)
@@ -227,8 +242,8 @@ open class KlassIndexProcessor : AbstractProcessor() {
     }
 
     private fun getFullName(typeElement: TypeElement): String? {
-        when (typeElement.nestingKind) {
-            NestingKind.TOP_LEVEL -> return typeElement.qualifiedName.toString()
+        return when (typeElement.nestingKind) {
+            NestingKind.TOP_LEVEL -> typeElement.qualifiedName.toString()
             NestingKind.MEMBER -> {
                 val enclosingElement = typeElement.enclosingElement
                 if (enclosingElement is TypeElement) {
@@ -237,9 +252,9 @@ open class KlassIndexProcessor : AbstractProcessor() {
                         return "$enclosingName.${typeElement.simpleName}"
                     }
                 }
-                return null
+                null
             }
-            else -> return null
+            else -> null
         }
     }
 

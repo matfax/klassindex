@@ -56,7 +56,7 @@ sealed class InnerClasses : GivenAbstractKlass() {
     }
 
     /**
-     * Local classes should not be indexed
+     * Local classes should not be indexed.
      */
     fun testMethod() {
         class NotIndexedClass

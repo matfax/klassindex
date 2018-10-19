@@ -22,13 +22,23 @@ import assertk.assertions.containsOnly
 import assertk.assertions.isEmpty
 import org.junit.jupiter.api.Test
 
+/**
+ * Performs test for the [KlassIndexTest]
+ */
 class KlassIndexTest {
+
+    /**
+     * Check if [KlassIndex.getSubclasses] returns the expected subclasses.
+     */
     @Test
     fun shouldIndexSubclasses() {
         val subclasses = KlassIndex.getSubclasses(Service::class).toList()
         assert(subclasses).containsOnly(SecondService::class, InnerClasses.InnerService::class)
     }
 
+    /**
+     * Check if [KlassIndex.getAnnotated] returns the expected annotated classes.
+     */
     @Test
     fun shouldIndexAnnotated() {
         val annotated = KlassIndex.getAnnotated(Component::class).toList()
@@ -40,6 +50,9 @@ class KlassIndexTest {
         )
     }
 
+    /**
+     * Check if [KlassIndex.getSubclasses] returns the expected subclasses that have been defined using kapt arguments.
+     */
     @Test
     fun shouldIndexKaptSubclassArguments() {
         val subclasses = KlassIndex.getSubclasses(GivenAbstractKlass::class).toList()
@@ -49,6 +62,10 @@ class KlassIndexTest {
         )
     }
 
+    /**
+     * Check if [KlassIndex.getSubclasses] returns the expected subclasses that have been defined using kapt arguments
+     * and which's superclasses are external to this project.
+     */
     @Test
     fun shouldIndexExternalKaptArguments() {
         val subclasses = KlassIndex.getSubclasses(Exception::class).toList()
@@ -57,6 +74,10 @@ class KlassIndexTest {
         )
     }
 
+    /**
+     * Check if [KlassIndex.getAnnotated] returns the expected annotated classes
+     * that have been defined using kapt arguments.
+     */
     @Test
     fun shouldIndexKaptAnnotationArguments() {
         val annotated = KlassIndex.getAnnotated(GivenAnnotation::class).toList()
@@ -66,6 +87,10 @@ class KlassIndexTest {
         )
     }
 
+    /**
+     * Check if [KlassIndex.getAnnotated] returns the expected annotated classes
+     * that have been defined using multiple kapt arguments.
+     */
     @Test
     fun shouldIndexMultipleKaptAnnotationArguments() {
         val annotated = KlassIndex.getAnnotated(AnotherGivenAnnotation::class).toList()
@@ -74,6 +99,9 @@ class KlassIndexTest {
         )
     }
 
+    /**
+     * Check if [KlassIndex.getAnnotated] returns the expected annotated classes which's annotation is inherited.
+     */
     @Test
     fun shouldIndexWhenAnnotationIsInherited() {
         val annotated = KlassIndex.getAnnotated(InheritedAnnotation::class).toList()
@@ -84,18 +112,27 @@ class KlassIndexTest {
         )
     }
 
+    /**
+     * Check if [KlassIndex.getAnnotated] returns the no annotated classes if the annotation is not annotated.
+     */
     @Test
     fun shouldNotIndexNotAnnotatedAnnotation() {
         val annotated = KlassIndex.getAnnotated(MeaninglessAnnotation::class).toList()
         assert(annotated).isEmpty()
     }
 
+    /**
+     * Check if [KlassIndex.getSubclasses] returns the no subclasses if the superclass is not annotated.
+     */
     @Test
     fun shouldNotIndexNotAnnotatedSuperclass() {
         val subclasses = KlassIndex.getSubclasses(SecondComponent::class).toList()
         assert(subclasses).isEmpty()
     }
 
+    /**
+     * Check if [KlassIndex.getAnnotated] returns the the expected names of the annotated classes.
+     */
     @Test
     fun shouldReturnNamesOfAnnotated() {
         val annotated = KlassIndex.getAnnotated(Component::class).qualifiedNames().toList()
@@ -107,6 +144,9 @@ class KlassIndexTest {
         )
     }
 
+    /**
+     * Check if [KlassIndex.getSubclasses] returns the the expected names of the subclasses.
+     */
     @Test
     fun shouldReturnNamesOfSubclasses() {
         val services = KlassIndex.getSubclasses(Service::class).qualifiedNames().toList()

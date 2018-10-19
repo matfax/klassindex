@@ -17,4 +17,7 @@
 
 package com.github.matfax.klassindex
 
+/**
+ * A meaningless arbitrary annotation.
+ */
 annotation class MeaninglessAnnotation

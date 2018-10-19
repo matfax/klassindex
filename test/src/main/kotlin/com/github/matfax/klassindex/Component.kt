@@ -17,6 +17,9 @@
 
 package com.github.matfax.klassindex
 
+/**
+ * A component.
+ */
 @IndexAnnotated
 @Retention
 annotation class Component

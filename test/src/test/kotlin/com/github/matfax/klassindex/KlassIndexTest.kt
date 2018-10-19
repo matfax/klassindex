@@ -22,7 +22,6 @@ import assertk.assertions.containsOnly
 import assertk.assertions.isEmpty
 import org.junit.jupiter.api.Test
 
-@Suppress("DEPRECATION")
 class KlassIndexTest {
     @Test
     fun shouldIndexSubclasses() {

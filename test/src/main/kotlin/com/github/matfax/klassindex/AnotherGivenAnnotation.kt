@@ -17,4 +17,7 @@
 
 package com.github.matfax.klassindex
 
+/**
+ * Another externally given annotation.
+ */
 annotation class AnotherGivenAnnotation

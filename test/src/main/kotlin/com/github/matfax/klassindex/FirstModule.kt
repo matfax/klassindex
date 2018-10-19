@@ -17,4 +17,7 @@
 
 package com.github.matfax.klassindex
 
+/**
+ * First module.
+ */
 class FirstModule : Module

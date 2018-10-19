@@ -17,4 +17,7 @@
 
 package com.github.matfax.klassindex
 
+/**
+ * The second service.
+ */
 class SecondService : Service

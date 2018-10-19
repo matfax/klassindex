@@ -19,6 +19,9 @@ package com.github.matfax.klassindex
 
 import java.lang.annotation.Inherited
 
+/**
+ * A inherited annotation.
+ */
 @Inherited
 @IndexAnnotated
 annotation class InheritedAnnotation

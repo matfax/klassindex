@@ -29,20 +29,35 @@ sealed class InnerClasses : GivenAbstractKlass() {
 
     class MyException(msg: String) : Exception(msg)
 
-    // both static and non-static inner classes should be indexed
+    /**
+     * An inner service.
+     * Both static and non-static inner classes should be indexed
+     */
     class InnerService : Service
 
+    /**
+     * An inner module.
+     */
     inner class InnerModule : Module
 
+    /**
+     * An inner component.
+     */
     @Component
     sealed class InnerComponent {
+
+        /**
+         * An inner component inside an inner component.
+         */
         @Component
         internal inner class InnerInnerComponent
 
         companion object
     }
 
-    // local classes should not be indexed
+    /**
+     * Local classes should not be indexed
+     */
     fun testMethod() {
         class NotIndexedClass
     }

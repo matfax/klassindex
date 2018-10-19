@@ -17,6 +17,9 @@
 
 package com.github.matfax.klassindex
 
+/**
+ * A service.
+ */
 @IndexSubclasses
 @InheritedAnnotation
 interface Service

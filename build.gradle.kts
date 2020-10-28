@@ -11,7 +11,7 @@ plugins {
     kotlin("jvm") version "1.3.0" apply false
     kotlin("kapt") version "1.3.0" apply false
     id("com.palantir.git-version") version "0.12.0-rc2"
-    id("com.gradle.build-scan") version "1.16"
+    id("com.gradle.build-scan") version "3.5"
 }
 
 subprojects {

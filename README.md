@@ -14,19 +14,18 @@
 | ---------------------- | -------------------------------------------------- | --------------------------------------- |
 | Language               | Java                                               | Kotlin                                  |
 | Supported Classes      | Any Java class                                     | `Any` Kotlin class                      |
-| Supported Build Tools  | Maven and outdated Gradle versions<sup>7</sup>     | Any Gradle version                      |
-| Supported Scopes       | Annotations, Subclasses, Packages                  | Annotations, Subclasses<sup>6</sup>     |
-| Service Loader Support | Yes                                                | No, superfluous<sup>8</sup>             |
+| Supported Build Tools  | Maven and Gradle                                   | Gradle                                  |
+| Supported Scopes       | Annotations, Subclasses, Packages                  | Annotations, Subclasses<sup>5</sup>     |
+| Service Loader Support | Yes                                                | No, superfluous<sup>6</sup>             |
 | JaxB Index             | Yes                                                | No                                      |
 | Stores Documentation   | Yes                                                | No                                      |
-| IDE Support            | Eclipse, Netbeans, Jetbrains (limited)<sup>3</sup> | Full Jetbrains support                  |
 | Android Support        | Limited<sup>2</sup>                                | Yes                                     |
 | Runtime Performance    | Great                                              | Even Greater<sup>1</sup>                |
-| Filtering Support      | Limited                                            | Complete functional support<sup>4</sup> |
+| Filtering Support      | Limited                                            | Complete functional support<sup>3</sup> |
 | Extension Support      | Yes                                                | Theoretically                           |
 | Index external classes | Yes, by extending the processor                    | Yes, using kapt arguments               |
 | Jar Shading Support    | Yes                                                | Maybe                                   |
-| Compile Time Safety    | Limited<sup>5</sup>                                | Complete                                |
+| Compile Time Safety    | Limited<sup>4</sup>                                | Complete                                |
 | Class Loader Required  | Yes                                                | No                                      |
 | License                | Apache 2.0                                         | Apache 2.0                              |
 
@@ -34,12 +33,10 @@
 
 1.  ClassIndex stores the qualified names of the classes to load at run time in the jar's resources. The resource parsing and class loading comes with a cost. In contrast, **K**lassIndex statically compiles the references. That means resource and classloading are not necessary. Excluded, however, are use cases where you have tons of classes and want only to load few of them, ClassIndex might show a better performance.
 2.  ClassIndex depends on resource and class loading. In use cases in Android where no context is available or a different class loader is to be used, ClassIndex will fail. **K**lassIndex compiles the references statically to enable full support.
-3.  New IntelliJ and Android Studio versions require newer versions of Gradle to provide full support.
-4.  **K**lassIndex provides all functional methods from Kotlin's `Iterable`, not just filters.
-5.  ClassIndex uses workarounds to detect if classes are valid and still existent. **K**lassIndex, however uses statically compiled generated classes so that the compiler can check the validity.
-6.  Kotlin does not (yet?) have such a concept such as Java's package files. Thus, package indexing has been removed to be consistent with the Kotlin.
-7.  ClassIndex does not provide separate dependency modules for annotation processing and compilation as required by newer Gradle versions (i.e., deprecated in Gradle 4.x, to be dropped in Gradle 5.x). **K**lassIndex provides a spearate annotation processor to be used with Gradle's `kotlin-kapt`.
-8.  The only use case in which a service loader is to be preferred over statical compilation are plugin-based systems.
+3.  **K**lassIndex provides all functional methods from Kotlin's `Iterable`, not just filters.
+4.  ClassIndex uses workarounds to detect if classes are valid and still existent. **K**lassIndex, however uses statically compiled generated classes so that the compiler can check the validity.
+5.  Kotlin does not (yet?) have such a concept such as Java's package files. Thus, package indexing has been removed to be consistent with the Kotlin.
+6.  The only use case in which a service loader is to be preferred over statical compilation are plugin-based systems.
 
 ### Methods
 

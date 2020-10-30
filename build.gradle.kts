@@ -1,29 +1,11 @@
-import com.gradle.scan.plugin.BuildScanExtension
 import groovy.lang.Closure
-import org.gradle.internal.scan.config.BuildScanConfig
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.utils.sure
-import java.lang.reflect.Method
 
 plugins {
     base
     maven
-    kotlin("jvm") version "1.3.0" apply false
-    kotlin("kapt") version "1.3.0" apply false
-    id("com.palantir.git-version") version "0.12.0-rc2"
-    id("com.gradle.build-scan") version "1.16"
-}
-
-subprojects {
-    tasks.withType<KotlinCompile>().configureEach {
-        println("Configuring $name in project ${project.name}...")
-        kotlinOptions {
-            suppressWarnings = true
-            jvmTarget = "1.8"
-            freeCompilerArgs = freeCompilerArgs
-                    .plus("-XXLanguage:+InlineClasses")
-        }
-    }
+    kotlin("jvm") version "1.4.10" apply false
+    kotlin("kapt") version "1.4.10" apply false
+    id("com.palantir.git-version") version "0.12.3"
 }
 
 allprojects {
@@ -31,9 +13,8 @@ allprojects {
     apply(plugin = "maven")
 
     repositories {
+        mavenCentral()
         google()
-        jcenter()
-        maven("https://jitpack.io")
     }
 
     group = "com.github.matfax.klassindex"
@@ -78,9 +59,4 @@ allprojects {
             }
         }
     }
-}
-
-configure<BuildScanExtension> {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
 }

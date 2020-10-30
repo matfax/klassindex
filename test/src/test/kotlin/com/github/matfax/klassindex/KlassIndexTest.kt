@@ -17,9 +17,8 @@
 
 package com.github.matfax.klassindex
 
-import assertk.assert
-import assertk.assertions.containsOnly
-import assertk.assertions.isEmpty
+import assertk.assertThat
+import assertk.assertions.*
 import org.junit.jupiter.api.Test
 
 /**
@@ -33,7 +32,7 @@ class KlassIndexTest {
     @Test
     fun shouldIndexSubclasses() {
         val subclasses = KlassIndex.getSubclasses(Service::class).toList()
-        assert(subclasses).containsOnly(SecondService::class, InnerClasses.InnerService::class)
+        assertThat(subclasses).containsOnly(SecondService::class, InnerClasses.InnerService::class)
     }
 
     /**
@@ -42,7 +41,7 @@ class KlassIndexTest {
     @Test
     fun shouldIndexAnnotated() {
         val annotated = KlassIndex.getAnnotated(Component::class).toList()
-        assert(annotated).containsOnly(
+        assertThat(annotated).containsOnly(
                 FirstComponent::class,
                 SecondComponent::class,
                 InnerClasses.InnerComponent::class,
@@ -56,7 +55,7 @@ class KlassIndexTest {
     @Test
     fun shouldIndexKaptSubclassArguments() {
         val subclasses = KlassIndex.getSubclasses(GivenAbstractKlass::class).toList()
-        assert(subclasses).containsOnly(
+        assertThat(subclasses).containsOnly(
                 InnerClasses::class,
                 GivenKlass::class
         )
@@ -69,7 +68,7 @@ class KlassIndexTest {
     @Test
     fun shouldIndexExternalKaptArguments() {
         val subclasses = KlassIndex.getSubclasses(Exception::class).toList()
-        assert(subclasses).containsOnly(
+        assertThat(subclasses).containsOnly(
                 InnerClasses.MyException::class
         )
     }
@@ -81,7 +80,7 @@ class KlassIndexTest {
     @Test
     fun shouldIndexKaptAnnotationArguments() {
         val annotated = KlassIndex.getAnnotated(GivenAnnotation::class).toList()
-        assert(annotated).containsOnly(
+        assertThat(annotated).containsOnly(
                 FirstComponent::class,
                 GivenKlass::class
         )
@@ -94,7 +93,7 @@ class KlassIndexTest {
     @Test
     fun shouldIndexMultipleKaptAnnotationArguments() {
         val annotated = KlassIndex.getAnnotated(AnotherGivenAnnotation::class).toList()
-        assert(annotated).containsOnly(
+        assertThat(annotated).containsOnly(
                 AnotherGivenKlass::class
         )
     }
@@ -105,7 +104,7 @@ class KlassIndexTest {
     @Test
     fun shouldIndexWhenAnnotationIsInherited() {
         val annotated = KlassIndex.getAnnotated(InheritedAnnotation::class).toList()
-        assert(annotated).containsOnly(
+        assertThat(annotated).containsOnly(
                 Service::class,
                 SecondService::class,
                 InnerClasses.InnerService::class
@@ -118,7 +117,7 @@ class KlassIndexTest {
     @Test
     fun shouldNotIndexNotAnnotatedAnnotation() {
         val annotated = KlassIndex.getAnnotated(MeaninglessAnnotation::class).toList()
-        assert(annotated).isEmpty()
+        assertThat(annotated).isEmpty()
     }
 
     /**
@@ -127,7 +126,7 @@ class KlassIndexTest {
     @Test
     fun shouldNotIndexNotAnnotatedSuperclass() {
         val subclasses = KlassIndex.getSubclasses(SecondComponent::class).toList()
-        assert(subclasses).isEmpty()
+        assertThat(subclasses).isEmpty()
     }
 
     /**
@@ -136,7 +135,7 @@ class KlassIndexTest {
     @Test
     fun shouldReturnNamesOfAnnotated() {
         val annotated = KlassIndex.getAnnotated(Component::class).qualifiedNames().toList()
-        assert(annotated).containsOnly(
+        assertThat(annotated).containsOnly(
                 FirstComponent::class.qualifiedName,
                 SecondComponent::class.qualifiedName,
                 InnerClasses.InnerComponent::class.qualifiedName,
@@ -150,7 +149,7 @@ class KlassIndexTest {
     @Test
     fun shouldReturnNamesOfSubclasses() {
         val services = KlassIndex.getSubclasses(Service::class).qualifiedNames().toList()
-        assert(services).containsOnly(
+        assertThat(services).containsOnly(
                 SecondService::class.java.canonicalName,
                 InnerClasses.InnerService::class.qualifiedName
         )

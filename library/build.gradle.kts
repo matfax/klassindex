@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    compile(kotlin("stdlib"))
-    compile(kotlin("reflect"))
+    api(kotlin("stdlib"))
+    api(kotlin("reflect"))
 }

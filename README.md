@@ -1,10 +1,10 @@
 # KlassIndex
 
-[![](https://jitpack.io/v/matfax/klassindex.svg)](https://jitpack.io/#matfax/klassindex)
-[![Build Status](https://travis-ci.com/matfax/klassindex.svg?branch=master)](https://travis-ci.com/matfax/klassindex)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2e6175aef7ee4fef89b28cca2ce9b4f4)](https://www.codacy.com/app/matfax/klassindex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=matfax/klassindex&amp;utm_campaign=Badge_Grade)
-![GitHub License](https://img.shields.io/github/license/matfax/klassindex.svg)
-![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex.svg)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/matfax/klassindex/build/master?style=for-the-badge)](https://github.com/matfax/klassindex/actions)
+[![JitPack](https://img.shields.io/jitpack/v/github/matfax/klassindex?style=for-the-badge)](https://jitpack.io/#matfax/klassindex)
+[![CodeFactor](https://www.codefactor.io/repository/github/matfax/klassindex/badge?style=for-the-badge)](https://www.codefactor.io/repository/github/matfax/klassindex)
+[![GitHub License](https://img.shields.io/github/license/matfax/klassindex.svg?style=for-the-badge)](https://github.com/matfax/klassindex/blob/master/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex?color=9cf&style=for-the-badge)](https://github.com/matfax/klassindex/commits/master)
 
 ## About
 

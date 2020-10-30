@@ -1,0 +1,26 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ 11, 14, 15 ]
+    steps:
+      - name: check out code
+        uses: actions/checkout@v2.3.3
+        with:
+          persist-credentials: false
+      - name: set up JDK
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: ${{ matrix.java }}
+      - uses: eskatos/gradle-command-action@v1.3.3
+        with:
+          arguments: test

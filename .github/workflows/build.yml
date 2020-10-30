@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         java: [ 11, 14, 15 ]
+    name: test with JDK ${{ matrix.java }}
     steps:
       - name: check out code
         uses: actions/checkout@v2.3.3
@@ -21,6 +22,8 @@ jobs:
         uses: actions/setup-java@v1.4.3
         with:
           java-version: ${{ matrix.java }}
-      - uses: eskatos/gradle-command-action@v1.3.3
+      - uses: burrunan/gradle-cache-action@v1
+        name: build project
         with:
-          arguments: test
+          arguments: build
+          concurrent: true

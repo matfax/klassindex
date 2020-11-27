@@ -15,7 +15,7 @@ jobs:
     name: test with JDK ${{ matrix.java }}
     steps:
       - name: check out code
-        uses: actions/checkout@v2.3.3
+        uses: actions/checkout@v2.3.4
         with:
           persist-credentials: false
       - name: set up JDK

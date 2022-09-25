@@ -3,7 +3,7 @@ import groovy.lang.Closure
 plugins {
     base
     maven
-    kotlin("jvm") version "1.4.32" apply false
+    kotlin("jvm") version "1.7.10" apply false
     kotlin("kapt") version "1.4.32" apply false
     id("com.palantir.git-version") version "0.12.3"
 }

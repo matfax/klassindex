@@ -5,7 +5,7 @@ plugins {
     maven
     kotlin("jvm") version "1.4.32" apply false
     kotlin("kapt") version "1.4.32" apply false
-    id("com.palantir.git-version") version "0.12.3"
+    id("com.palantir.git-version") version "0.15.0"
 }
 
 allprojects {

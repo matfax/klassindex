@@ -9,7 +9,7 @@ pluginManagement {
 rootProject.name = "klassindex"
 
 plugins {
-    id("com.gradle.enterprise").version("3.5")
+    id("com.gradle.enterprise").version("3.5.2")
 }
 
 include("library", "processor", "test")

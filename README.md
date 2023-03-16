@@ -1,10 +1,10 @@
 # KlassIndex
 
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/matfax/klassindex/build/master?style=for-the-badge)](https://github.com/matfax/klassindex/actions)
-[![JitPack](https://img.shields.io/jitpack/v/github/matfax/klassindex?style=for-the-badge)](https://jitpack.io/#matfax/klassindex)
+![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/matfax/klassindex/build.yml?branch=main&style=for-the-badge)
 [![CodeFactor](https://www.codefactor.io/repository/github/matfax/klassindex/badge?style=for-the-badge)](https://www.codefactor.io/repository/github/matfax/klassindex)
 [![GitHub License](https://img.shields.io/github/license/matfax/klassindex.svg?style=for-the-badge)](https://github.com/matfax/klassindex/blob/master/LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex?color=9cf&style=for-the-badge)](https://github.com/matfax/klassindex/commits/master)
+![GitHub Release Date](https://img.shields.io/github/release-date/matfax/klassindex?color=%23986293&style=for-the-badge)
 
 ## About
 

@@ -21,11 +21,13 @@ import java.lang.reflect.Modifier
 import kotlin.reflect.KCallable
 import kotlin.reflect.KClass
 import kotlin.reflect.full.companionObjectInstance
+import kotlin.jvm.JvmInline
 
 /**
  * Provides helper functions on a wrapped set of [KClass].
  */
-inline class KlassSubIndex<T : Any>(private val classes: Set<KClass<out T>>) : Iterable<KClass<out T>> {
+@JvmInline
+value class KlassSubIndex<T : Any>(private val classes: Set<KClass<out T>>) : Iterable<KClass<out T>> {
 
     /**
      * Provides an iterator on the wrapped set of [KClass].

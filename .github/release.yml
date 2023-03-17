@@ -1,0 +1,42 @@
+changelog:
+  categories:
+    - title: 🏕 Features
+      labels:
+        - feature
+    - title: 👒 Dependencies
+      labels:
+        - dependencies
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug
+    - title: 📝 Documentation
+      labels:
+        - documentation
+    - title: 🧪 Tests
+      labels:
+        - test
+    - title: 🚀 Performance
+      labels:
+        - performance
+    - title: 🎨 Style
+      labels:
+        - style
+    - title: 🧯 Security
+      labels:
+        - security
+    - title: 🧹 Chores
+      labels:
+        - chore
+    - title: Other
+      labels:
+        - '*'
+      exclude:
+        - dependencies
+        - chore
+        - test
+        - documentation
+        - style
+        - performance
+        - security
+        - bug
+        - feature

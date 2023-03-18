@@ -15,6 +15,8 @@ allprojects {
         google()
     }
 
+    val gitVersion: groovy.lang.Closure<String> by extra
+    version = gitVersion()
     group = "com.github.matfax.klassindex"
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {

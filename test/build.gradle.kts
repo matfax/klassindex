@@ -35,3 +35,5 @@ kapt {
         )
     }
 }
+
+publishing {}

@@ -1,8 +1,7 @@
 plugins {
     kotlin("jvm")
     kotlin("kapt")
-    id("org.jetbrains.dokka") version "1.8.10"
-    id("com.vanniktech.maven.publish") version "0.24.0"
+    id("org.jetbrains.dokka")
 }
 
 dependencies {
@@ -13,15 +12,6 @@ dependencies {
     kapt("com.google.auto.service:auto-service:1.0.1")
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/matfax/klassindex")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
+mavenPublishing {
+    coordinates("$group", "processor", "$version")
 }

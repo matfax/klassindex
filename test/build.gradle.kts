@@ -24,12 +24,12 @@ kapt {
     useBuildCache = true
     arguments {
         arg(
-                "com.github.matfax.klassindex.IndexAnnotated",
+                "$group.IndexAnnotated",
                 "$group.GivenAnnotation",
                 "$group.AnotherGivenAnnotation"
         )
         arg(
-                "com.github.matfax.klassindex.IndexSubclasses",
+                "$group.IndexSubclasses",
                 "$group.GivenAbstractKlass",
                 "java.lang.Exception"
         )

@@ -32,7 +32,7 @@ project("processor") {
 
 }
 
-subprojects {
+val publishConfig = closureOf<Project> {
     apply(plugin = "com.vanniktech.maven.publish")
 
     publishing {
@@ -48,3 +48,6 @@ subprojects {
         }
     }
 }
+
+project("processor", publishConfig)
+project("library", publishConfig)

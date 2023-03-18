@@ -7,7 +7,3 @@ dependencies {
     api(kotlin("stdlib"))
     api(kotlin("reflect"))
 }
-
-mavenPublishing {
-    coordinates("$group", "library", "$version")
-}

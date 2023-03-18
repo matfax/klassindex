@@ -11,7 +11,3 @@ dependencies {
     implementation("com.google.auto.service:auto-service:1.0.1")
     kapt("com.google.auto.service:auto-service:1.0.1")
 }
-
-mavenPublishing {
-    coordinates("$group", "processor", "$version")
-}

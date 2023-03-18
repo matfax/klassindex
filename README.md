@@ -67,22 +67,12 @@ plugins {
 }
 ```
 
--   Add repository
-
-```groovy
-allprojects {
-	repositories {
-		maven { url 'https://jitpack.io' }
-	}
-}
-```
-
 -   Add dependencies
 
 ```groovy
 // Replace with the latest versions from Jitpack
-compile 'com.github.matfax.klassindex:library:4.+'
-kapt 'com.github.matfax.klassindex:processor:4.+'
+compile 'fyi.fax.klassindex:library:4.+'
+kapt 'fyi.fax.klassindex:processor:4.+'
 ```
 
 -   (Optional) Enable kapt build cache
@@ -104,22 +94,12 @@ plugins {
 }
 ```
 
--   Add repository
-
-```kotlin
-allprojects {
-    repositories {
-    	maven("https://jitpack.io")
-	}
-}
-```
-
 -   Add dependencies
 
 ```kotlin
 // Replace with the latest versions from Jitpack
-compile("com.github.matfax.klassindex:library:4.+")
-kapt("com.github.matfax.klassindex:processor:4.+")
+compile("fyi.fax.klassindex:library:4.+")
+kapt("fyi.fax.klassindex:processor:4.+")
 ```
 
 -   (Optional) Enable kapt build cache
@@ -129,10 +109,6 @@ kapt {
     useBuildCache = true
 }
 ```
-
-#### Others
-
-For others, check: [Jitpack](https://jitpack.io/#matfax/klassindex)
 
 ### Annotations
 
@@ -200,7 +176,7 @@ To add the regarding annotations to the desired external class, just add an argu
 kapt {
     arguments {
         arg(
-                "com.github.matfax.klassindex.IndexSubclasses", // IndexAnnotated alternatively
+                "fyi.fax.klassindex.IndexSubclasses", // IndexAnnotated alternatively
                 "java.lang.Exception" // this is a vararg
         )
     }

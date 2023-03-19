@@ -5,6 +5,7 @@
 [![GitHub License](https://img.shields.io/github/license/matfax/klassindex.svg?style=for-the-badge)](https://github.com/matfax/klassindex/blob/master/LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/matfax/klassindex?color=9cf&style=for-the-badge)](https://github.com/matfax/klassindex/commits/master)
 ![GitHub Release Date](https://img.shields.io/github/release-date/matfax/klassindex?color=%23986293&style=for-the-badge)
+[![Maven Central](https://img.shields.io/maven-central/v/fyi.fax.klassindex/library?style=for-the-badge)](https://central.sonatype.com/namespace/fyi.fax.klassindex)
 
 ## About
 
@@ -31,24 +32,24 @@
 
 ### Explanation
 
-1.  ClassIndex stores the qualified names of the classes to load at run time in the jar's resources. The resource parsing and class loading comes with a cost. In contrast, **K**lassIndex statically compiles the references. That means resource and classloading are not necessary. Excluded, however, are use cases where you have tons of classes and want only to load few of them, ClassIndex might show a better performance.
+1.  ClassIndex stores the qualified names of the classes to load at run time in the jar's resources. The resource parsing and class loading comes at a cost. In contrast, **K**lassIndex statically compiles the references. That means resource and classloading are not necessary. Excluded, however, are use cases where there are tons unreferenced of classes with only few of them to be loaded. ClassIndex might show a better performance then.
 2.  ClassIndex depends on resource and class loading. In use cases in Android where no context is available or a different class loader is to be used, ClassIndex will fail. **K**lassIndex compiles the references statically to enable full support.
 3.  **K**lassIndex provides all functional methods from Kotlin's `Iterable`, not just filters.
-4.  ClassIndex uses workarounds to detect if classes are valid and still existent. **K**lassIndex, however uses statically compiled generated classes so that the compiler can check the validity.
+4.  ClassIndex uses workarounds to detect if classes are valid and still existent. **K**lassIndex, however, uses statically compiled generated classes so that the compiler can check their validity.
 5.  Kotlin does not (yet?) have such a concept such as Java's package files. Thus, package indexing has been removed to be consistent with the Kotlin.
-6.  The only use case in which a service loader is to be preferred over statical compilation are plugin-based systems.
+6.  The only use case in which a service loader is to be preferred over statical compilation is in plugin-based systems.
 
 ### Methods
 
--   the list of classes annotated by a given annotation getAnnotated()
--   the list of classes implementing a given interface getSubclasses()
+-   the list of classes annotated by a given annotation `getAnnotated()`
+-   the list of classes implementing a given interface `getSubclasses()`
 
 ### Advantages
 
 **K**lassIndex
 
 -   is faster than reading a file, it is not impacted by the usual performance penalty of the classpath scanning
--   is not depending on a class loader
+-   does not depend on a class loader
 -   is light-weight and simple
 -   supports incremental compilation in IntelliJ and Android Studio
 
@@ -162,7 +163,7 @@ KlassIndex.getAnnotated(SomeAnnotation.class).topLevel().withModifiers(Modifier.
 KlassIndex.getAnnotated(SomeAnnotation.class).annotatedWith(SecondAnnotation::class).objects()
 ```
 
-For more examples, check the [test file](https://github.com/matfax/klassindex/blob/master/test/src/test/kotlin/com/github/matfax/klassindex/KlassSubIndexTest.kt).
+For more examples, check the [test file](https://github.com/matfax/klassindex/blob/master/test/src/test/kotlin/fyi/fax/klassindex/KlassSubIndexTest.kt).
 
 ### Indexing Without Annotations
 

@@ -24,12 +24,12 @@ kapt {
     useBuildCache = true
     arguments {
         arg(
-                "$group.IndexAnnotated",
+                "fyi.fax.klassindex.IndexAnnotated",
                 "$group.GivenAnnotation",
                 "$group.AnotherGivenAnnotation"
         )
         arg(
-                "$group.IndexSubclasses",
+                "fyi.fax.klassindex.IndexSubclasses",
                 "$group.GivenAbstractKlass",
                 "java.lang.Exception"
         )

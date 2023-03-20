@@ -28,10 +28,6 @@ allprojects {
     }
 }
 
-project("processor") {
-
-}
-
 val publishConfig = closureOf<Project> {
     apply(plugin = "com.vanniktech.maven.publish")
 

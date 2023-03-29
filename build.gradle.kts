@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt") version "1.8.10" apply false
     id("org.jetbrains.dokka") version "1.8.10" apply false
     id("com.vanniktech.maven.publish") version "0.25.1"
-    id("com.palantir.git-version") version "2.0.0"
+    id("com.palantir.git-version") version "3.0.0"
 }
 
 allprojects {

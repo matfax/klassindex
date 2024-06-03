@@ -19,7 +19,7 @@ jobs:
           distribution: zulu
           java-version: 11
       - name: validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1.0.6
+        uses: gradle/wrapper-validation-action@v1.1.0
       - name: publish package
         uses: gradle/gradle-build-action@v2.4.2
         with:

@@ -9,15 +9,15 @@ pluginManagement {
 rootProject.name = "klassindex"
 
 plugins {
-    id("com.gradle.enterprise").version("3.12.6")
+    id("com.gradle.develocity").version("3.18.1")
 }
 
 include("library", "processor", "test")
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishOnFailure()
+        termsOfUseUrl.set("https://gradle.com/help/legal-terms-of-use")
+        termsOfUseAgree.set("yes")
+        publishing.onlyIf { true }
     }
 }

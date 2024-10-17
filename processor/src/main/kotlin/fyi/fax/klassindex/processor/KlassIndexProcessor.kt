@@ -41,6 +41,7 @@ import javax.lang.model.util.Elements
 import javax.lang.model.util.Types
 import javax.tools.Diagnostic
 import kotlin.reflect.KClass
+import kotlinx.datetime.Clock
 
 /**
  * Generates index files for [KlassIndex].
@@ -143,6 +144,12 @@ open class KlassIndexProcessor : AbstractProcessor() {
         val file = FileSpec.builder(KlassIndex::class.java.`package`.name, className)
                 .addType(
                         TypeSpec.objectBuilder(className)
+                        .addAnnotation(
+                                    AnnotationSpec.builder(Generated::class)
+                                    .addMember("value = [%S]", KlassIndexProcessor::class.qualifiedName!!)
+                                    .addMember("date = %S", Clock.System.now().toString())
+                                    .build()
+                                )
                                 .addSuperinterface(Index::class)
                                 .addFunction(indexBuilder.build())
                                 .build()

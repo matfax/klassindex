@@ -3,8 +3,8 @@ plugins {
     kotlin("jvm") version "1.8.22" apply false
     kotlin("kapt") version "1.8.22" apply false
     id("org.jetbrains.dokka") version "1.8.20" apply false
-    id("com.vanniktech.maven.publish") version "0.25.3"
-    id("com.palantir.git-version") version "3.0.0"
+    id("com.vanniktech.maven.publish") version "0.27.0"
+    id("com.palantir.git-version") version "3.1.0"
 }
 
 allprojects {
